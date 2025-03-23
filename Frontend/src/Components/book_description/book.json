@@ -1,0 +1,112 @@
+[
+    {
+      "_id": "1",
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald", 
+      "rating": "4.5",
+      "price": "Free",
+      "summary": "A novel about the American dream, The Great Gatsby follows the mysterious millionaire Jay Gatsby and his obsessive love for the beautiful Daisy Buchanan. Set in the summer of 1922 on Long Island, New York, the novel depicts the lavish and decadent lifestyle of the wealthy elite during the Roaring Twenties. Narrated by Nick Carraway, Daisy's cousin and Gatsby's neighbor, the story unfolds as Gatsby attempts to rekindle his romantic relationship with Daisy, who is now married to the wealthy but unfaithful Tom Buchanan. Through elaborate parties at his mansion, Gatsby hopes to attract Daisy's attention and recreate their past romance. As the story progresses, the facade of wealth and sophistication begins to crumble, revealing the hollow nature of the American Dream and the moral decay beneath the glittering surface of the Jazz Age. Gatsby's pursuit of Daisy leads to tragic consequences, as his idealistic dreams clash with reality. The novel masterfully explores themes of decadence, idealism, social upheaval, and excess, while offering a sharp critique of the American Dream - the idea that anyone, regardless of their origins, can achieve prosperity and success through determination and hard work. Through Gatsby's tragic story, Fitzgerald examines the corruption of the American dream in a society where old values have eroded, replaced by the pursuit of pleasure and material success. The novel also delves into class mobility, romantic idealization, and the corruption of wealth, all while painting a vivid portrait of the Jazz Age with its speakeasies, luxury cars, and wild parties. The story's tragic conclusion serves as a powerful commentary on the limitations of the American Dream and the destructive nature of obsessive love.",
+      "reviews": [
+        {
+          "username": "bookworm123",
+          "rating": 5,
+          "text": "Amazing book! A true masterpiece that captures the essence of the American Dream."
+        },
+        {
+          "username": "literaturefan",
+          "rating": 4,
+          "text": "A classic that never gets old. The prose is simply beautiful."
+        },
+        {
+          "username": "dystopia_lover",
+          "rating": 5,
+          "text": "Eye-opening! This book changed how I view society and government control."
+        },
+        {
+          "username": "bookreader99",
+          "rating": 4.5,
+          "text": "A must-read. More relevant today than ever before."
+        },
+        {
+          "username": "dystopia_lover",
+          "rating": 5,
+          "text": "Eye-opening! This book changed how I view society and government control."
+        },
+        {
+          "username": "bookreader99",
+          "rating": 4.5,
+          "text": "A must-read. More relevant today than ever before."
+        },
+        {
+          "username": "dystopia_lover",
+          "rating": 5,
+          "text": "Eye-opening! This book changed how I view society and government control."
+        },
+        {
+          "username": "bookreader99",
+          "rating": 4.5,
+          "text": "A must-read. More relevant today than ever before."
+        },
+        {
+          "username": "dystopia_lover",
+          "rating": 2,
+          "text": "Eye-opening! This book changed how I view society and government control."
+        },
+        {
+          "username": "bookreader99",
+          "rating": 0,
+          "text": "A must-read. More relevant today than ever before."
+        }
+      ]
+    },
+    {
+      "_id": "2",
+      "title": "1984",
+      "author": "George Orwell",
+      "rating": "4.8", 
+      "price": "10$",
+      "summary": "A dystopian novel about totalitarianism...",
+      "reviews": [
+        {
+          "username": "dystopia_lover",
+          "rating": 5,
+          "text": "Eye-opening! This book changed how I view society and government control."
+        },
+        {
+          "username": "bookreader99",
+          "rating": 4.5,
+          "text": "A must-read. More relevant today than ever before."
+        },
+        {
+          "username": "dystopia_lover",
+          "rating": 5,
+          "text": "Eye-opening! This book changed how I view society and government control."
+        },
+        {
+          "username": "bookreader99",
+          "rating": 4.5,
+          "text": "A must-read. More relevant today than ever before."
+        },
+        {
+          "username": "dystopia_lover",
+          "rating": 5,
+          "text": "Eye-opening! This book changed how I view society and government control."
+        },
+        {
+          "username": "bookreader99",
+          "rating": 4.5,
+          "text": "A must-read. More relevant today than ever before."
+        },
+        {
+          "username": "dystopia_lover",
+          "rating": 5,
+          "text": "Eye-opening! This book changed how I view society and government control."
+        },
+        {
+          "username": "bookreader99",
+          "rating": 4.5,
+          "text": "A must-read. More relevant today than ever before."
+        }
+      ]
+    }
+  ]

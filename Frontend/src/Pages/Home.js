@@ -5,8 +5,6 @@ import Menu from "./Menu";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
-
-// Import Book Images
 import g1 from "../Components/g1.jpg";
 import g2 from "../Components/g2.jpg";
 import g3 from "../Components/g3.jpg";
@@ -22,7 +20,6 @@ import t1 from "../Components/t1.jpg";
 import t2 from "../Components/t2.png";
 
 function Home() {
-  // Books for Popular Carousel
   const books = [g1, f2, t1, g3, h1, d1];
 
   // Category-based book data
@@ -126,18 +123,13 @@ function Home() {
               </div>
             </>
           )}
-
           {/* Display Books as Separate Cards Below */}
           <Row className="mt-4">
             {filteredBooks.length > 0 ? (
               filteredBooks.map((book, idx) => (
-                <Col key={idx} md={4} className="mb-4">
+                <Col key={idx} md={4} className="mb1-4">
                   <Card className="books1-card">
                     <Card.Img variant="top" src={book.image} className="book-image" />
-                    <Card.Body>
-                      <Card.Title>{book.title}</Card.Title>
-                      <Card.Text>{book.description}</Card.Text>
-                    </Card.Body>
                   </Card>
                 </Col>
               ))

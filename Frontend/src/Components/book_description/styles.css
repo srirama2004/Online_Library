@@ -1,0 +1,184 @@
+.book_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  background-color: rgb(0, 0, 0);
+  color: white;
+  padding: 50px;
+  gap: 20px;
+  position: relative;
+}
+
+.book_image {
+  position: sticky;
+  top: 50px;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  flex-shrink: 0;
+  width: 300px;
+}
+
+.book_cover {
+  height: 500px;
+  width: 300px;
+}
+
+.book_info {
+  display: flex;
+  flex-direction: row;
+  gap: 2em;
+  width: 100%;
+  color: white;
+}
+
+.book_info > button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  align-self: self-start;
+  font-size: 20px;
+  margin-left: auto;
+  color: white;
+}
+
+.book_title {
+  font-size: x-large;
+  color: white;
+  margin: 0;
+}
+
+.book_author {
+  font-size: medium;
+  color: white;
+}
+
+.book_button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.book_button button {
+  width: 100%;
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #923c3f 0%, #d85a5e 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.book_details {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  flex: 1;
+  padding-top: 25px;
+  max-width: 800px;
+  overflow-y: auto;
+}
+
+.abstract {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.reviews-section {
+  margin-top: 40px;
+}
+
+.reviews-section h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.reviews-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 40px;
+}
+
+.review-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.reviewer-info {
+  width: 100%;
+}
+
+.user-rating-line {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.username {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.star {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.star.filled {
+  color: #ffd700; /* Golden color for filled stars */
+}
+
+.star.empty {
+  color: #d3d3d3; /* Light gray for empty stars */
+}
+
+.rating-number {
+  margin-left: 4px;
+  font-size: 14px;
+  color: #666;
+}
+
+.review-content {
+  color: #555;
+
+  font-size: 14px;
+}
+
+.review_header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.star-button {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 22px;
+  cursor: pointer;
+  outline: none;
+}

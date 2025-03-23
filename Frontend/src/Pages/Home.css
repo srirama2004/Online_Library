@@ -11,11 +11,6 @@
     min-height: 100vh;
   }
   
-  .search-bar input {
-    border-radius: 5px;
-    padding: 10px;
-    background-color: aliceblue;
-  }
 /* Categories */
 .mt-4 {
     display: flex;
@@ -30,17 +25,17 @@
     background: #ff4500 !important;
   }
   .mx-2 {
-    background: #8B0000;
+    background: #8B0000 !important;
     color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 20px;
+    border-radius: 20px !important;
     font-size: 16px;
     transition: background 0.3s ease;
   }
   
   .mx-2:hover, .mx-2:focus {
-    background: #ff0000;
+    background: #ff0000 !important;
   }
   
   .mx-2:active, .mx-2.selected {
@@ -85,23 +80,23 @@
   }
   /* Book Cards */
 .books1-card {
-  background: #333;
-  color: white;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease-in-out;
-  margin: 20px;
-  width: 180px;
-  height: 250px;
+  background: #333 !important;
+  color: white !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3) !important;
+  transition: transform 0.3s ease-in-out !important;
+  margin: 20px !important;
+  width: 180px !important;
+  height: 250px !important;
 }
 
 .books1-card:hover {
-  transform: scale(1.05);
+  transform: scale(1.005) !important;
 }
 .card-body {
-  text-align: center;
-  padding: 15px;
+  text-align: center !important;
+  padding: 15px !important;
 }
 
 /* Responsive Design */
@@ -109,4 +104,15 @@
   .book-image {
     height: 200px;
   }
+}
+.mb1-4{
+  display: flex;
+  flex-direction: coloumn;
+  justify-content: center;
+  margin-top: 30px!important;
+  flex-wrap: wrap;
+  margin: 2px!important;
+  margin-left: 50px;
+  width: 210px !important;
+  height: 300px !important;
 }
