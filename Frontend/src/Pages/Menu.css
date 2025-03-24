@@ -85,3 +85,52 @@
     margin-top: -200px;
     margin-left: 80%;
   }
+  @media (max-width: 768px) {
+    .auth-btn {
+      background: #9d0000 !important;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px !important;
+      font-size: 10px!important;
+      margin: 5px;
+      width: 70px !important;
+    }
+    .auth-btn:hover {
+      background: #f20707 !important;
+      color: white;
+    }
+    .overlay {
+      position: relative;
+      margin-top: -100px;
+      margin-left: 60%;
+    }
+    .search-bar .btn {
+      padding: 12px 20px;
+      width: 80px;
+      border-radius: 25px;
+      background-color: #8B0000;
+      border: none;
+      color: white;
+      font-size: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+    
+    /* Button Hover Effect */
+    .search-bar .btn:hover {
+      background-color: #000000;
+    }
+    .search-bar input {
+      padding: 12px 15px;
+      width: 250px!important;
+      height: 40px;
+      border-radius: 25px;
+      border: 2px solid #ccc;
+      outline: none;
+      font-size: 16px;
+      background-color: white !important;
+      color: black !important;;
+    }
+  }

@@ -116,3 +116,38 @@
   width: 210px !important;
   height: 300px !important;
 }
+/* Responsive Design */
+@media (max-width: 768px) {
+  .book-carousel {
+    width: 90%;
+    margin: auto;
+    margin-left: 5%;
+    margin-top: -0.08%;
+  }
+  .carousel-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 5px;
+    color: aliceblue;
+  }
+  .slick-slide {
+    transition: transform 0.5s ease;
+    opacity: 1;
+  }
+  
+  .slick-center {
+    transform: scale(1);  /* Make center book larger */
+    opacity: 1;
+  }
+  .book-image {
+    width: 180px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.5s ease;
+    margin: auto;
+  }
+  
+}
