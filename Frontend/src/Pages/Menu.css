@@ -33,7 +33,7 @@
 
 .search-bar input {
   padding: 12px 15px;
-  width: 450px;
+  width: 400px!important;
   height: 40px;
   border-radius: 25px;
   border: 2px solid #ccc;
@@ -68,7 +68,7 @@
     padding: 0px;
   }
   .auth-btn {
-    background: #8B0000 !important;
+    background: #9d0000 !important;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -77,11 +77,11 @@
     margin: 10px;
   }
   .auth-btn:hover {
-    background: #9d0000 !important;
+    background: #f20707 !important;
     color: white;
   }
   .overlay {
     position: relative;
-    margin-top: -90px;
+    margin-top: -200px;
     margin-left: 80%;
   }

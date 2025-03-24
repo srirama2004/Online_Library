@@ -18,10 +18,10 @@ import f1 from "../Components/f1.jpg";
 import f2 from "../Components/f2.jpg";
 import t1 from "../Components/t1.jpg";
 import t2 from "../Components/t2.png";
-
+import { useNavigate } from "react-router-dom"; 
 function Home() {
   const books = [g1, f2, t1, g3, h1, d1];
-
+  const navigate = useNavigate(); 
   // Category-based book data
   const bookCategories = {
     General: [
@@ -98,7 +98,7 @@ function Home() {
                   autoplaySpeed={2000}
                 >
                   {books.map((book, idx) => (
-                    <div key={idx} className="carousel-item">
+                    <div key={idx} className="carousel-item" onClick={() => navigate("/book/1")}>
                       <img src={book} alt={`Book ${idx + 1}`} className="book-image" />
                     </div>
                   ))}
@@ -128,7 +128,7 @@ function Home() {
             {filteredBooks.length > 0 ? (
               filteredBooks.map((book, idx) => (
                 <Col key={idx} md={4} className="mb1-4">
-                  <Card className="books1-card">
+                  <Card className="books1-card" onClick={() => navigate("/book/1")}>
                     <Card.Img variant="top" src={book.image} className="book-image" />
                   </Card>
                 </Col>

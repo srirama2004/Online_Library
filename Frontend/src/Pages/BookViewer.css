@@ -1,0 +1,70 @@
+/* Dark & Light Mode */
+.dark-mode {
+    background: #121212 !important;
+    color: #ffffff !important;
+  }
+  
+  .light-mode {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  
+  /* Fixed Header */
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: #800b0b;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+  
+  .back-btn, .right-buttons button {
+    background: #000000;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    margin-left: 5px;
+  }
+  
+  /* Scrollable Book Container */
+  .book-container {
+    height: 90vh; /* Occupy most of screen height */
+    overflow-y: auto; /* Enable scrolling only inside this */
+    padding: 100px 20px 20px; /* Push content down to avoid fixed header */
+  }
+  
+  /* Book Content */
+  .book-content {
+    text-align: center;
+    max-width: 900px;
+    margin: auto;
+    padding-bottom: 50px;
+  }
+  
+  .book-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .book-cover {
+    width: 200px;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Book Text */
+  .book-text {
+    line-height: 1.8;
+    text-align: justify;
+    margin-bottom: 20px;
+    padding: 0 10px;
+  }
+  

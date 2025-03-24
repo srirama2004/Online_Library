@@ -3,14 +3,14 @@ import { useParams } from "react-router-dom";
 import books from "./book.json"; // Import JSON file directly
 import "./styles.css";
 import ReviewCard from "./ReviewCard";
-
+import { useNavigate } from "react-router-dom"; 
 const BookReview = () => {
   const { id } = useParams(); // Get book ID from URL params
   const book = books.find((b) => b._id === id);
   const [newReview, setNewReview] = useState({ rating: 0, text: "" });
   const [showModal, setShowModal] = useState(false);
   console.log(id);
-  
+    const navigate = useNavigate(); 
   if (!book) return <p>Book not found</p>;
 
   const averageRating = book.reviews.reduce((acc, review) => acc + review.rating, 0) / book.reviews.length;
@@ -60,7 +60,7 @@ const BookReview = () => {
           </div>
           <button className="book_wishlist">❤️</button>
         </div>
-        <div className="book_button">
+        <div className="book_button" onClick={() => navigate("/bookviewer")}>
           <button 
             className={book.price === "Free" ? "read-button" : "buy-button"}
             onClick={handleButtonClick}
@@ -76,7 +76,7 @@ const BookReview = () => {
     
       <div className="book_details">
         <h4>Abstract</h4>
-        <div className="abstract">
+        <div className="abstract" style={{ textAlign: "justify" }}>
           {book.summary}
         </div>
         <br></br>
