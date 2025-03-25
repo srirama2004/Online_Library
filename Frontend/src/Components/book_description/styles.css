@@ -81,6 +81,7 @@
   flex-direction: column;
   color: white;
   flex: 1;
+  align-items: self-start;
   padding-top: 25px;
   max-width: 800px;
   overflow-y: auto;

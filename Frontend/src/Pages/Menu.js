@@ -10,7 +10,7 @@ function Menu({ searchQuery, setSearchQuery }) {
       <div className="overlay">
         <Nav className="ms-auto">
           <Button className="auth-btn"onClick={() => navigate("/signin")}>Login</Button>
-          <Button className="auth-btn"onClick={() => navigate("/signup")}>Sign In</Button>
+          <Button className="auth-btn"onClick={() => navigate("/signup")}>Sign Up</Button>
         </Nav>
       </div> 
       {/* Search Section */}

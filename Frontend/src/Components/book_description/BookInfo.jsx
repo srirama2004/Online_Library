@@ -4,6 +4,7 @@ import books from "./book.json"; // Import JSON file directly
 import "./styles.css";
 import ReviewCard from "./ReviewCard";
 import { useNavigate } from "react-router-dom"; 
+import g1 from "../g1.jpg";
 const BookReview = () => {
   const { id } = useParams(); // Get book ID from URL params
   const book = books.find((b) => b._id === id);
@@ -36,7 +37,7 @@ const BookReview = () => {
     <div className="book_container">
       <div className="book_image">
         <img
-          src="https://placehold.co/300x450"
+          src={g1}
           alt="Book cover"
           className="book_cover"
         />
