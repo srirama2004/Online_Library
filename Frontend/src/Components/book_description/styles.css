@@ -184,3 +184,7 @@
   cursor: pointer;
   outline: none;
 }
+
+.book_sub_info_1{
+  justify-items: start;
+}

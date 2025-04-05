@@ -55,5 +55,26 @@ router.get("/top6", async (req, res) => {
   }
 });
 
+// 
+
+router.get("/get/:id", async (req, res) => {
+  try {
+    const bookId = req.params.id;
+    console.log("Fetching book with ID:", bookId);
+
+    const book = await Book.findOne({ bookId: Number(bookId) });
+
+    if (!book) {
+      return res.status(404).json({ error: "Book not found" });
+    }
+
+    res.json(book);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch book", details: err.message });
+  }
+});
+
+
+
 
 module.exports = router;
