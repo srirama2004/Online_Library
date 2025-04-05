@@ -58,7 +58,7 @@ function Home() {
                   autoplaySpeed={2000}
                 >
                   {books.map((book, idx) => (
-                    <div key={idx} className="carousel-item" onClick={() => navigate("/book/1")}>
+                    <div key={idx} className="carousel-item" onClick={() => navigate(`/book/${book.bookId}`)}>
                       <img src={book.image} alt={`Book ${idx + 1}`} className="book-image" />
                     </div>
                   ))}

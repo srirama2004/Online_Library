@@ -1,48 +1,66 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import books from "./book.json"; // Import JSON file directly
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import "./styles.css";
 import ReviewCard from "./ReviewCard";
-import { useNavigate } from "react-router-dom"; 
-import g1 from "../g1.jpg";
+
+
 const BookReview = () => {
-  const { id } = useParams(); // Get book ID from URL params
-  const book = books.find((b) => b._id === id);
+  const { id } = useParams(); 
+  const navigate = useNavigate(); 
+
   const [newReview, setNewReview] = useState({ rating: 0, text: "" });
   const [showModal, setShowModal] = useState(false);
-  console.log(id);
-    const navigate = useNavigate(); 
-  if (!book) return <p>Book not found</p>;
+  const [book, setBook] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const averageRating = book.reviews.reduce((acc, review) => acc + review.rating, 0) / book.reviews.length;
+  useEffect(() => {
+    const fetchBook = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/books/get/${id}`);
+        const data = await res.json();
+        setBook(data);
+      } catch (err) {
+        console.error("Error fetching book:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBook();
+  }, [id]);
 
   const handleSubmitReview = (e) => {
     e.preventDefault();
-    // Here you would typically make an API call to save the review
     console.log("New review:", newReview);
     setShowModal(false);
   };
 
   const handleButtonClick = () => {
-    if (book.price === "Free") {
-   
+    if (book?.price === 0) {
       console.log("Opening book to read");
     } else {
-      
-      console.log("Proceeding to purchase for", book.price);
+      console.log("Proceeding to purchase for", book?.price);
     }
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (!book) return <p>Book not found</p>;
+
+  const averageRating =
+    book.reviews?.length > 0
+      ? book.reviews.reduce((acc, review) => acc + review.rating, 0) / book.reviews.length
+      : 0;
 
   return (
     <div className="book_container">
       <div className="book_image">
         <img
-          src={g1}
+          src={book.image}
           alt="Book cover"
           className="book_cover"
         />
         <div className="book_info">
-          <div>
+          <div className="book_sub_info_1">
             <h1 className="book_title">{book.title}</h1>
             <h3 className="book_author">By {book.author}</h3>
             <div className="book_rating">
@@ -66,7 +84,7 @@ const BookReview = () => {
             className={book.price === "Free" ? "read-button" : "buy-button"}
             onClick={handleButtonClick}
           >
-            {book.price === "Free" ? (
+            {book.price === 0 ? (
               <>Read Now</>
             ) : (
               <>Buy for {book.price}</>
@@ -74,38 +92,38 @@ const BookReview = () => {
           </button>
         </div>
       </div>
-    
+
       <div className="book_details">
         <h4>Abstract</h4>
         <div className="abstract" style={{ textAlign: "justify" }}>
-          {book.summary}
+          {book.abstract}
         </div>
-        <br></br>
+        <br />
         <div className="review_header">
-        <h4>Reviews</h4>
-        <div className="write-review">
-          <div className="star-rating">
-            {[1, 2, 3, 4, 5].map(num => (
-              <button
-                key={num}
-                type="button" 
-                className="star-button"
-                style={{color: num <= newReview.rating ? '#ffd700' : '#d3d3d3'}}
-                onClick={() => {
-                  setNewReview({...newReview, rating: num});
-                  setShowModal(true);
-                }}
-              >
-                {num <= newReview.rating ? '★' : '☆'}
-              </button>
-            ))}
+          <h4>Reviews</h4>
+          <div className="write-review">
+            <div className="star-rating">
+              {[1, 2, 3, 4, 5].map(num => (
+                <button
+                  key={num}
+                  type="button" 
+                  className="star-button"
+                  style={{color: num <= newReview.rating ? '#ffd700' : '#d3d3d3'}}
+                  onClick={() => {
+                    setNewReview({...newReview, rating: num});
+                    setShowModal(true);
+                  }}
+                >
+                  {num <= newReview.rating ? '★' : '☆'}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+
         {showModal && (
           <div className="review-modal">
             <div className="modal-content">
-
               <textarea
                 value={newReview.text}
                 onChange={(e) => setNewReview({...newReview, text: e.target.value})}
@@ -118,14 +136,15 @@ const BookReview = () => {
             </div>
           </div>
         )}
-        
-      
-       
 
         <div className="reviews-container">
-          {book.reviews.map((review, index) => (
-            <ReviewCard key={index} review={review} />
-          ))}
+          {book.reviews?.length > 0 ? (
+            book.reviews.map((review, index) => (
+              <ReviewCard key={index} review={review} />
+            ))
+          ) : (
+            <p>No reviews yet.</p>
+          )}
         </div>
       </div>
     </div>
