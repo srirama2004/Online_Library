@@ -2,14 +2,24 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./styles.css";
 import ReviewSection from "./ReviewSection";
+import RazorpayButton from "./RazorPayButton";
+import WishlistButton from "./WishlistButton";
+
 
 const BookReview = () => {
+
+  const userId = "123"; // Replace this with actual logged-in user ID
+
   const { id } = useParams(); 
   const navigate = useNavigate(); 
 
   const [book, setBook] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+
+
+  const [ownsBook, setOwnsBook] = useState(false); // ✅ Check ownership
+  
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -34,15 +44,28 @@ const BookReview = () => {
       }
     };
 
+
+    const checkOwnership = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/rzpay/check/${userId}/${id}`);
+        const data = await res.json();
+        setOwnsBook(data.owns);
+      } catch (err) {
+        console.error("Error checking ownership:", err);
+      }
+    };
+
+    checkOwnership();
     fetchBook();
     fetchReviews();
   }, [id]);
 
   const handleButtonClick = () => {
-    if (book?.price === 0) {
-      console.log("Opening book to read");
+    if (book?.price === 0 || ownsBook) {
+      navigate("/bookviewer"); // ✅ Allow read
     } else {
       console.log("Proceeding to purchase for", book?.price);
+      // open Razorpay flow or go to checkout
     }
   };
 
@@ -80,19 +103,22 @@ const BookReview = () => {
               </div>
             </div>
           </div>
-          <button className="book_wishlist">❤️</button>
-        </div>
-        <div className="book_button" onClick={() => navigate("/bookviewer")}>
-          <button 
-            className={book.price === "Free" ? "read-button" : "buy-button"}
-            onClick={handleButtonClick}
-          >
-            {book.price === 0 ? (
-              <>Read Now</>
+          <WishlistButton userId={userId} bookId={id} />      
+            </div>
+        <div className="book_button">
+         
+            {(book.price === 0 || ownsBook )? (
+              <button 
+              className={book.price === "Free" ? "read-button" : "buy-button"}
+             
+              onClick={handleButtonClick}>
+                Read Now
+              </button>
             ) : (
-              <>Buy for {book.price}</>
+              <RazorpayButton amount={book.price} bookId={id} user={{
+                id: userId}} onSuccess={handleButtonClick} ></RazorpayButton>
             )}
-          </button>
+         
         </div>
       </div>
 
@@ -103,6 +129,7 @@ const BookReview = () => {
         </div>
         <br />
         <ReviewSection bookId={id} reviews={reviews} setReviews={setReviews} />
+        
       </div>
     </div>
   );
