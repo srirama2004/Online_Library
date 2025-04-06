@@ -195,18 +195,29 @@
 
 
 .review-card {
-  background: white;
+  background: rgb(0, 0, 0);
   border-radius: 12px;
   padding: 16px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  width: 60vw;
   margin-bottom: 16px;
 }
 
-.review-footer.flipped {
+.review-card > div {
+  color: #adadad;
+}
+
+.review-footer {
   display: flex;
-  justify-content: space-between;
+  gap: 20px;
   align-items: center;
 }
+
+
+.review-footer > div{
+  color: #b7b7b7;
+  margin-bottom: 4px;
+}
+
 
 .username {
   font-weight: 600;
@@ -229,9 +240,3 @@
 }
 
 /* Add this to your styles.css */
-.grid-layout {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
-}

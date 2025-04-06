@@ -17,12 +17,14 @@ const ReviewCard = ({ review }) => {
 
   return (
     <div className="review-card grid-layout">
-      <div className="review-content">{review.text}</div>
-      <div className="review-footer flipped">
+    
+      <div className="review-footer">
       <div className="username">{review.username}</div>
         <div className="stars-section">{renderStars(review.rating)}</div>
         
+        
       </div>
+      <div className="review-content">{review.text}</div>
     </div>
   );
 };

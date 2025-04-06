@@ -41,7 +41,7 @@ const ReviewSection = ({ bookId, reviews, setReviews }) => {
     <div className="reviews-section">
       <div className="review_header">
         <h4>Reviews</h4>
-        <div className="write-review">
+        {/* <div className="write-review">
           <div className="star-rating">
             {[1, 2, 3, 4, 5].map(num => (
               <button
@@ -58,10 +58,10 @@ const ReviewSection = ({ bookId, reviews, setReviews }) => {
               </button>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
 
-      {showModal && (
+      {/* {showModal && (
         <div className="review-modal">
           <div className="modal-content">
             <textarea
@@ -75,9 +75,9 @@ const ReviewSection = ({ bookId, reviews, setReviews }) => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
 
-      <div className="reviews-container grid-layout">
+      <div className="reviews-container ">
         {reviews.length > 0 ? (
           reviews.map((review, index) => (
             <ReviewCard key={index} review={review} />
