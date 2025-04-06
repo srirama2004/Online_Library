@@ -21,6 +21,10 @@
   width: 300px;
 }
 
+.book_image > img {
+  height: 65vh;
+}
+
 .book_cover {
   height: 500px;
   width: 300px;
@@ -167,7 +171,7 @@
 
 .review-content {
   color: #555;
-
+  justify-self: start;
   font-size: 14px;
 }
 
@@ -187,4 +191,47 @@
 
 .book_sub_info_1{
   justify-items: start;
+}
+
+
+.review-card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  margin-bottom: 16px;
+}
+
+.review-footer.flipped {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.username {
+  font-weight: 600;
+  color: #1c2c40;
+  font-size: 16px;
+}
+
+.stars {
+  display: flex;
+  gap: 2px;
+}
+
+.star {
+  font-size: 20px;
+  color: #d3d3d3;
+}
+
+.star.filled {
+  color: gold;
+}
+
+/* Add this to your styles.css */
+.grid-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
 }

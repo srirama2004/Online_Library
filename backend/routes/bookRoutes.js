@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Book = require("../models/bookDescription"); // Import Model
+const Book = require("../models/bookdescription"); // Import Model
 
 // ➤ Add a new book
 router.post("/add", async (req, res) => {
