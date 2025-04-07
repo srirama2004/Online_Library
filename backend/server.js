@@ -10,7 +10,6 @@ const wishlistRoutes = require("./routes/handleWIshlist");
 const authRoutes = require('./routes/auth');
 
 
-
 require("dotenv").config();
  // Import Model
 

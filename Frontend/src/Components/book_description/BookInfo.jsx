@@ -8,7 +8,9 @@ import WishlistButton from "./WishlistButton";
 
 const BookReview = () => {
 
-  const userId = "123"; // Replace this with actual logged-in user ID
+  // const userId = "123"; // Replace this with actual logged-in user ID
+  const userId = localStorage.getItem("userId");
+
 
   const { id } = useParams(); 
   const navigate = useNavigate(); 

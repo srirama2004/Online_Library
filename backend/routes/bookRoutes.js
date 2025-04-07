@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Book = require("../models/bookdescription"); // Import Model
+const Order = require('../models/orders'); // adjust path as needed
 
 // ➤ Add a new book
 router.post("/add", async (req, res) => {
@@ -54,7 +55,6 @@ router.get("/top6", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch top books", details: err.message });
   }
 });
-
 // 
 
 router.get("/get/:id", async (req, res) => {
@@ -75,6 +75,31 @@ router.get("/get/:id", async (req, res) => {
 });
 
 
+router.get('/user-orders/:userId', async (req, res) => {
+  const { userId } = req.params;
+  console.log("Received request for purchased orders for userId:", userId);
 
+  try {
+    // Find all orders for this user where payment is successful
+    const orders = await Order.find({ userId, status: 'paid' });
+    console.log("Orders found:", orders);
 
+    // Extract bookIds from orders (convert to numbers if necessary)
+    const bookIds = orders.map(order => {
+      const parsedId = parseInt(order.bookId);
+      console.log(`Parsed bookId for order ${order._id}:`, parsedId);
+      return parsedId;
+    });
+    console.log("Extracted book IDs:", bookIds);
+
+    // Retrieve book details for these bookIds
+    const books = await Book.find({ bookId: { $in: bookIds } });
+    console.log("Fetched books corresponding to orders:", books);
+
+    res.status(200).json(books);
+  } catch (error) {
+    console.error("Error fetching purchased books:", error);
+    res.status(500).json({ message: 'Failed to fetch purchased books' });
+  }
+});
 module.exports = router;
