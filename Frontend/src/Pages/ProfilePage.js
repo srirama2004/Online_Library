@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Nav } from 'react-bootstrap';
 import { BsPerson } from 'react-icons/bs';
@@ -37,6 +38,7 @@ const ProfilePage = () => {
         const storedUserEmail = localStorage.getItem('userEmail');
         setUserEmail(storedUserEmail);
     }, []);
+    const navigate = useNavigate();
 
     const handleTabSelect = (tab) => {
         setActiveTab(tab);
@@ -202,6 +204,7 @@ const ProfilePage = () => {
             overflow: 'hidden',
             height: '10px',
             marginTop: '10px',
+            color:'black'
         },
         progressBar: {
             height: '100%',
@@ -294,7 +297,7 @@ const ProfilePage = () => {
     const wishListContent = (
         <div>
             <h3 className="text-center mb-4 text-white">Go read</h3>
-            <div id="booksCarousel" className="carousel slide" data-bs-ride="carousel">
+            <div id="wishListCarousel" className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-inner" style={styles.carouselInner}>
                     {Array.from({ length: Math.ceil(wishListBooks.length / 5) }, (_, i) => (
                         <div key={i} className={`carousel-item ${i === 0 ? 'active' : ''}`} style={styles.carouselItem}>
@@ -316,11 +319,11 @@ const ProfilePage = () => {
                         </div>
                     ))}
                 </div>
-                <button className="carousel-control-prev" type="button" data-bs-target="#booksCarousel" data-bs-slide="prev" style={styles.carouselControl}>
+                <button className="carousel-control-prev" type="button" data-bs-target="#wishListCarousel" data-bs-slide="prev" style={styles.carouselControl}>
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Previous</span>
                 </button>
-                <button className="carousel-control-next" type="button" data-bs-target="#booksCarousel" data-bs-slide="next" style={styles.carouselControl}>
+                <button className="carousel-control-next" type="button" data-bs-target="#wishListCarousel" data-bs-slide="next" style={styles.carouselControl}>
                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Next</span>
                 </button>
@@ -339,15 +342,38 @@ const ProfilePage = () => {
     return (
         <Container fluid style={styles.pageContainer} className="p-0">
             {/* Header with bookshelf background and profile icon */}
-            <div style={styles.headerSection}>
-                <img src={pic} alt="Library shelves" style={styles.fullHeightImage} />
-                <div style={styles.profileOverlay}>
-                    <div style={styles.profileIcon}>
-                        <BsPerson size={50} color="#5D3F37" />
-                    </div>
-                    <div style={styles.userName}>{userEmail}</div>
-                </div>
-            </div>
+            <div style={{ position: 'relative' }}>
+  {/* Back Button - Top Left */}
+  <button 
+    onClick={() => navigate('/')} 
+    style={{
+      position: 'absolute',
+      top: 20,
+      left: 20,
+      backgroundColor: '#382e25',
+      color: 'white',
+      padding: '10px 16px',
+      border: 'none',
+      borderRadius: '6px',
+      cursor: 'pointer',
+      zIndex: 10
+    }}
+  >
+    ← Back to Home
+  </button>
+
+  {/* Header Section */}
+  <div style={styles.headerSection}>
+    <img src={pic} alt="Library shelves" style={styles.fullHeightImage} />
+    <div style={styles.profileOverlay}>
+      <div style={styles.profileIcon}>
+        <BsPerson size={50} color="#5D3F37" />
+      </div>
+      <div style={styles.userName}>{userEmail}</div>
+    </div>
+  </div>
+</div>
+
 
             {/* Navigation tabs */}
             <div style={styles.navContainer}>
