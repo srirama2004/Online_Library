@@ -7,6 +7,7 @@ import Signin from "./Pages/SignIn.js"
 import Signup from "./Pages/Signup.js"
 import BookViewer from "./Pages/BookViewer.js";
 import CheckInPage from "./Pages/CheckInPage.js";  
+import GoogleAuthSuccess from "./Pages/GoogleAuthSuccess.js";
 import "./App.css";
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/bookviewer" element={<BookViewer />} />
           <Route path="/checkin" element={<CheckInPage />} />
+          <Route path="/google-auth-success" element={<GoogleAuthSuccess />} />
         </Routes>
       </div>
     </Router>

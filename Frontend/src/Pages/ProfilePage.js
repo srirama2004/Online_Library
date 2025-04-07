@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation  } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Nav, Card} from 'react-bootstrap';
+import { Container, Row, Col, Nav, Card } from 'react-bootstrap';
 import { BsPerson } from 'react-icons/bs';
 import pic from "../images/pic1.jpg";
 import gatsby from "../images/greatGatsby.png";
@@ -30,8 +30,12 @@ const ProfilePage = () => {
     const [hoveredTab, setHoveredTab] = useState(null);
     const [userId, setUserId] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
-    const [purchasedBooks, setPurchasedBooks] = useState([]); // Purchased books data
+    const [purchasedBooks, setPurchasedBooks] = useState([]);
+    const [wishlistBooks, setWishlistBooks] = useState([]);
     const navigate = useNavigate();
+
+    const location = useLocation();
+    
 
     // Retrieve userId and userEmail from localStorage
     useEffect(() => {
@@ -61,6 +65,21 @@ const ProfilePage = () => {
     const handleTabSelect = (tab) => {
         setActiveTab(tab);
     };
+
+    // NEW: Fetch wishlist books dynamically
+    useEffect(() => {
+        if (userId) {
+            console.log("Fetching wishlist for userId:", userId);
+            axios.get(`http://localhost:5000/wishlist/all/${userId}`)
+                .then(response => {
+                    console.log("Wishlist books fetched:", response.data);
+                    setWishlistBooks(response.data);
+                })
+                .catch(err => {
+                    console.error("Error fetching wishlist books:", err);
+                });
+        }
+    }, [userId]);
 
     // Initialize Bootstrap carousel after component fully renders
     useEffect(() => {
@@ -118,6 +137,8 @@ const ProfilePage = () => {
         { id: 6, title: "Lessons in Chemistry", author: "Bonnie Garmus", progress: 0, image: lessonsInChemistry },
         { id: 7, title: "Project Hail Mary", author: "Andy Weir", progress: 0, image: hailMary },
     ];
+
+
 
     // Styles for the profile page
     const styles = {
@@ -317,24 +338,68 @@ const ProfilePage = () => {
             </div>
         </div>
     );
-    const wishListContent = (
+    // const wishListContent = (
+    //     <div>
+    //         <h3 className="text-center mb-4 text-white">Go read</h3>
+    //         <div id="wishListCarousel" className="carousel slide" data-bs-ride="carousel">
+    //             <div className="carousel-inner" style={styles.carouselInner}>
+    //                 {Array.from({ length: Math.ceil(wishListBooks.length / 5) }, (_, i) => (
+    //                     <div key={i} className={`carousel-item ${i === 0 ? 'active' : ''}`} style={styles.carouselItem}>
+    //                         <div className="d-flex justify-content-center">
+    //                             {wishListBooks.slice(i * 5, (i + 1) * 5).map(book => (
+    //                                 <div key={book.id} style={styles.bookCard}>
+    //                                     <img
+    //                                         src={book.image}
+    //                                         alt={book.title}
+    //                                         style={styles.bookImage}
+    //                                     />
+    //                                     <div style={styles.bookCardContent}>
+    //                                         <h5 className="fs-6 text-center">{book.title}</h5>
+    //                                         <p className="text-center text-muted small">{book.author}</p>
+    //                                     </div>
+    //                                 </div>
+    //                             ))}
+    //                         </div>
+    //                     </div>
+    //                 ))}
+    //             </div>
+    //             <button className="carousel-control-prev" type="button" data-bs-target="#wishListCarousel" data-bs-slide="prev" style={styles.carouselControl}>
+    //                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+    //                 <span className="visually-hidden">Previous</span>
+    //             </button>
+    //             <button className="carousel-control-next" type="button" data-bs-target="#wishListCarousel" data-bs-slide="next" style={styles.carouselControl}>
+    //                 <span className="carousel-control-next-icon" aria-hidden="true"></span>
+    //                 <span className="visually-hidden">Next</span>
+    //             </button>
+    //         </div>
+    //     </div>
+    // );
+
+    const wishListContent = wishlistBooks.length > 0 ? (
         <div>
-            <h3 className="text-center mb-4 text-white">Go read</h3>
-            <div id="wishListCarousel" className="carousel slide" data-bs-ride="carousel">
+            <h3 className="text-center mb-4 text-white">Your Wishlist</h3>
+            <div id="wishlistCarousel" className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-inner" style={styles.carouselInner}>
-                    {Array.from({ length: Math.ceil(wishListBooks.length / 5) }, (_, i) => (
-                        <div key={i} className={`carousel-item ${i === 0 ? 'active' : ''}`} style={styles.carouselItem}>
+                    {Array.from({ length: Math.ceil(wishlistBooks.length / 4) }, (_, i) => (
+                        <div
+                            key={i}
+                            className={`carousel-item ${i === 0 ? 'active' : ''}`}
+                            style={styles.carouselItem}
+                        >
                             <div className="d-flex justify-content-center">
-                                {wishListBooks.slice(i * 5, (i + 1) * 5).map(book => (
-                                    <div key={book.id} style={styles.bookCard}>
+                                {wishlistBooks.slice(i * 4, (i + 1) * 4).map((book) => (
+                                    <div
+                                        key={book.bookId}
+                                        style={styles.bookCard}
+                                        onClick={() => navigate(`/book/${book.bookId}`)}
+                                    >
                                         <img
                                             src={book.image}
                                             alt={book.title}
                                             style={styles.bookImage}
                                         />
                                         <div style={styles.bookCardContent}>
-                                            <h5 className="fs-6 text-center">{book.title}</h5>
-                                            <p className="text-center text-muted small">{book.author}</p>
+                                            <h5 className="fs-6 text-center fw-bold" style={{ color: 'black' }}>{book.title}</h5>
                                         </div>
                                     </div>
                                 ))}
@@ -342,41 +407,92 @@ const ProfilePage = () => {
                         </div>
                     ))}
                 </div>
-                <button className="carousel-control-prev" type="button" data-bs-target="#wishListCarousel" data-bs-slide="prev" style={styles.carouselControl}>
+                <button
+                    className="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#wishlistCarousel"
+                    data-bs-slide="prev"
+                    style={styles.carouselControl}
+                >
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Previous</span>
                 </button>
-                <button className="carousel-control-next" type="button" data-bs-target="#wishListCarousel" data-bs-slide="next" style={styles.carouselControl}>
+                <button
+                    className="carousel-control-next"
+                    type="button"
+                    data-bs-target="#wishlistCarousel"
+                    data-bs-slide="next"
+                    style={styles.carouselControl}
+                >
                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Next</span>
                 </button>
             </div>
         </div>
+    ) : (
+        <div className="text-center p-5 text-white">No books in wishlist yet.</div>
     );
+
     const purchasedContent = purchasedBooks.length > 0 ? (
-        <div className="p-5">
-            <h4 className="text-white mb-3">Purchased Books</h4>
-            <Container>
-                <Row>
-                    {purchasedBooks.map((book, index) => (
-                        <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
-                            <Card
-                                onClick={() => navigate(`/book/${book.bookId}`)}
-                                style={{ cursor: 'pointer' }}
-                            >
-                                <Card.Img variant="top" src={book.image} alt={book.title} />
-                                <Card.Body>
-                                    <Card.Title>{book.title}</Card.Title>
-                                    <Card.Text>{book.abstract}</Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
+        <div>
+            <h3 className="text-center mb-4 text-white">Purchased Books</h3>
+            <div id="purchasedCarousel" className="carousel slide" data-bs-ride="carousel">
+                <div className="carousel-inner" style={styles.carouselInner}>
+                    {Array.from({ length: Math.ceil(purchasedBooks.length / 4) }, (_, i) => (
+                        <div
+                            key={i}
+                            className={`carousel-item ${i === 0 ? 'active' : ''}`}
+                            style={styles.carouselItem}
+                        >
+                            <div className="d-flex justify-content-center">
+                                {purchasedBooks.slice(i * 4, (i + 1) * 4).map((book) => (
+                                    <div
+                                        key={book.bookId}
+                                        style={styles.bookCard}
+                                        onClick={() => navigate(`/book/${book.bookId}`)}
+                                    >
+                                        <img
+                                            src={book.image}
+                                            alt={book.title}
+                                            style={styles.bookImage}
+                                        />
+                                        <div style={styles.bookCardContent}>
+                                            <h5 className="fs-6 text-center fw-bold" style={{ color: 'black' }}>
+                                                {book.title}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     ))}
-                </Row>
-            </Container>
+                </div>
+                <button
+                    className="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#purchasedCarousel"
+                    data-bs-slide="prev"
+                    style={styles.carouselControl}
+                >
+                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Previous</span>
+                </button>
+                <button
+                    className="carousel-control-next"
+                    type="button"
+                    data-bs-target="#purchasedCarousel"
+                    data-bs-slide="next"
+                    style={styles.carouselControl}
+                >
+                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Next</span>
+                </button>
+            </div>
         </div>
-    ) : (<div className="text-center p-5 text-white">No books purchased yet.</div>
+    ) : (
+        <div className="text-center p-5 text-white">No purchased books yet.</div>
     );
+
 
     // Content components for each tab
     // const tabContents = {

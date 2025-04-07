@@ -2,6 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User'); // Import the User model
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
 // SIGNUP Endpoint
 router.post('/signup', async (req, res) => {
@@ -41,5 +43,33 @@ router.post('/signin', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+// Google OAuth routes
+router.get('/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+router.get('/google/callback',
+  passport.authenticate('google', { failureRedirect: '/signin' }),
+  (req, res) => {
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: req.user._id },
+      process.env.JWT_SECRET || 'your_jwt_secret',
+      { expiresIn: '1h' }
+    );
+
+    // Redirect to frontend with token
+    // Get user email for displaying in profile
+    const userEmail = req.user.email;
+
+    // Redirect directly to profile page with userId and email as query parameters
+    // res.redirect(`http://localhost:3001/profile?userId=${req.user._id}&userEmail=${userEmail}`);
+    // res.redirect(`http://localhost:3000/profile#userId=${req.user._id}&userEmail=${req.user.email}`);
+ 
+    res.redirect(`http://localhost:3001/google-auth-success?token=${token}&userId=${req.user._id}&userEmail=${userEmail}`);
+    // res.redirect(`http://localhost:3001/profile?token=${token}&userId=${req.user._id}`);
+  }
+);
 
 module.exports = router;

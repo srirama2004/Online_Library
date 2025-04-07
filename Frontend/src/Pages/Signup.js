@@ -269,11 +269,17 @@ const Signup = () => {
                 </div>
 
                 <div style={styles.socialButtonsContainer}>
-                  <Button variant="outline-secondary" style={styles.socialButton}>
-                    {/* <FaGoogle style={{ marginRight: "8px" }} />  */}
+                  {/* <Button variant="outline-secondary" style={styles.socialButton}>
+                    <FcGoogle style={{ color: "#4285F4", marginRight: "8px" }} />
+                    Google
+                  </Button> */}
+                  <Button  variant="outline-secondary" style={styles.socialButton}
+                    href="http://localhost:5000/api/auth/google"
+                  >
                     <FcGoogle style={{ color: "#4285F4", marginRight: "8px" }} />
                     Google
                   </Button>
+
                 </div>
 
                 <div className="text-center">
