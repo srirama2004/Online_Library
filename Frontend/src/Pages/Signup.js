@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import pic from "../images/pic1.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SignIn from './SignIn';
 import { FcGoogle } from "react-icons/fc";
 
@@ -13,18 +13,44 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState(''); // ✅ Add this line
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!username) {
+      setMessage('Please enter email');
+      return;
+    }
+    if (!password) {
+      setMessage('Please enter password');
+      return;
+    }
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: username, password })
+      });
+      const data = await response.json();
+      setMessage(data.message);
+      if (response.ok) {
+        // Store the generated user ID in localStorage for later use
+        localStorage.setItem('userId', data.userId);
+        // Optionally, redirect to the SignIn page after successful signup
+        navigate('/signin');
+      }
+    } catch (error) {
+      console.error('Error during signup:', error);
+      setMessage('Error signing up');
+    }
+  };
+
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Login attempt:', { username, password });
-    // Add authentication logic here
-  };
-
-  // Updated color scheme to match the design
   const styles = {
     pageBackground: {
       backgroundColor: '#A67B5B', // Beige background
@@ -97,7 +123,7 @@ const Signup = () => {
     },
     formSubtitle: {
       color: '#666',
-      marginBottom: '2rem',
+      marginBottom: '0.5rem',
     },
     inputLabel: {
       fontWeight: '500',
@@ -126,7 +152,7 @@ const Signup = () => {
       borderRadius: '8px',
       padding: '0.75rem',
       fontWeight: '500',
-      marginBottom: '2rem',
+      marginBottom: '1rem',
     },
     divider: {
       display: 'flex',
@@ -229,6 +255,12 @@ const Signup = () => {
                 >
                   SIGN UP
                 </Button>
+                {message && (
+                  <div className="text-danger text-center mb-3" style={{ fontWeight: '500' }}>
+                    {message}
+                  </div>
+                )}
+
 
                 <div style={styles.divider}>
                   <div style={styles.dividerLine}></div>
@@ -239,7 +271,7 @@ const Signup = () => {
                 <div style={styles.socialButtonsContainer}>
                   <Button variant="outline-secondary" style={styles.socialButton}>
                     {/* <FaGoogle style={{ marginRight: "8px" }} />  */}
-                    <FcGoogle style={{ color: "#4285F4", marginRight: "8px" }} /> 
+                    <FcGoogle style={{ color: "#4285F4", marginRight: "8px" }} />
                     Google
                   </Button>
                 </div>
@@ -260,3 +292,4 @@ const Signup = () => {
 };
 
 export default Signup;
+

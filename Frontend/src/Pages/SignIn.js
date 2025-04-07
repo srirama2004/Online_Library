@@ -4,24 +4,53 @@ import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import pic from "../images/pic1.png";
 import { FcGoogle } from "react-icons/fc";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const SignIn = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [message, setMessage] = useState(''); // ✅ Add this line
+    const navigate = useNavigate();
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Login attempt:', { username, password });
-        // Add authentication logic here
+        if (!username) {
+            setMessage('Please enter email');
+            return;
+          }
+          if (!password) {
+            setMessage('Please enter password');
+            return;
+          }
+        try {
+            const response = await fetch('http://localhost:5000/api/auth/signin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: username, password })
+            });
+            const data = await response.json();
+            setMessage(data.message);
+            if (response.ok) {
+                // Save the userId returned from the backend
+                localStorage.setItem('userId', data.userId);
+                localStorage.setItem('userEmail', username);
+
+                // Navigate to the profile page (or home) after a successful sign-in
+                navigate('/profile');
+                // navigate('/profile', { state: { userId: data.userId } });
+            }
+        } catch (error) {
+            console.error('Error during sign in:', error);
+            setMessage('Error signing in');
+        }
     };
 
-    // Updated color scheme to match the design
     const styles = {
         pageBackground: {
             backgroundColor: '#A67B5B', // Beige background
@@ -123,7 +152,7 @@ const SignIn = () => {
             borderRadius: '8px',
             padding: '0.75rem',
             fontWeight: '500',
-            marginBottom: '2rem',
+            marginBottom: '1rem',
         },
         divider: {
             display: 'flex',
@@ -196,7 +225,7 @@ const SignIn = () => {
                                     <InputGroup style={styles.passwordField}>
                                         <Form.Control
                                             type={showPassword ? "text" : "password"}
-                                            placeholder="Create a strong password"
+                                            placeholder="Enter password"
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                             className="border-end-0"
@@ -227,6 +256,12 @@ const SignIn = () => {
                                     SIGN IN
                                 </Button>
 
+                                {message && (
+                                    <div className="text-danger text-center mb-3" style={{ fontWeight: '500' }}>
+                                        {message}
+                                    </div>
+                                )}
+
                                 <div style={styles.divider}>
                                     <div style={styles.dividerLine}></div>
                                     <span style={styles.dividerText}>or continue with</span>
@@ -256,3 +291,4 @@ const SignIn = () => {
 };
 
 export default SignIn;
+

@@ -24,6 +24,20 @@ const ProfilePage = () => {
     const [activeTab, setActiveTab] = useState('reads');
     const [hoveredTab, setHoveredTab] = useState(null);
 
+    const [userId, setUserId] = useState(null);
+    const [userEmail, setUserEmail] = useState(null);
+
+
+    useEffect(() => {
+        const storedUserId = localStorage.getItem('userId');
+        setUserId(storedUserId);
+    }, []);
+
+    useEffect(() => {
+        const storedUserEmail = localStorage.getItem('userEmail');
+        setUserEmail(storedUserEmail);
+    }, []);
+
     const handleTabSelect = (tab) => {
         setActiveTab(tab);
     };
@@ -51,9 +65,9 @@ const ProfilePage = () => {
             };
             document.body.appendChild(script);
         };
-        
+
         loadBootstrapScript();
-        
+
         // Cleanup function to remove the script when component unmounts
         return () => {
             const bootstrapScript = document.querySelector('script[src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"]');
@@ -65,15 +79,15 @@ const ProfilePage = () => {
 
     // Sample book data for the currently reading list
     const currentlyReadingBooks = [
-      { id: 1, title: "The Great Gatsby", author: "F. Scott Fitzgerald", progress: 45, image: gatsby },
-      { id: 2, title: "To Kill a Mockingbird", author: "Harper Lee", progress: 68, image: bird },
-      { id: 3, title: "1984", author: "George Orwell", progress: 23, image: onenine },
-      { id: 4, title: "Pride and Prejudice", author: "Jane Austen", progress: 89, image: pride },
-      { id: 5, title: "The Hobbit", author: "J.R.R. Tolkien", progress: 12, image: hobbit },
-      { id: 6, title: "Moby Dick", author: "Herman Melville", progress: 37, image: moby },
-      { id: 7, title: "The Catcher in the Rye", author: "J.D. Salinger", progress: 52, image: catcher },
-      { id: 8, title: "The Lord of the Rings", author: "J.R.R. Tolkien", progress: 74, image: lotr },
-      { id: 9, title: "Brave New World", author: "Aldous Huxley", progress: 41, image: brave },
+        { id: 1, title: "The Great Gatsby", author: "F. Scott Fitzgerald", progress: 45, image: gatsby },
+        { id: 2, title: "To Kill a Mockingbird", author: "Harper Lee", progress: 68, image: bird },
+        { id: 3, title: "1984", author: "George Orwell", progress: 23, image: onenine },
+        { id: 4, title: "Pride and Prejudice", author: "Jane Austen", progress: 89, image: pride },
+        { id: 5, title: "The Hobbit", author: "J.R.R. Tolkien", progress: 12, image: hobbit },
+        { id: 6, title: "Moby Dick", author: "Herman Melville", progress: 37, image: moby },
+        { id: 7, title: "The Catcher in the Rye", author: "J.D. Salinger", progress: 52, image: catcher },
+        { id: 8, title: "The Lord of the Rings", author: "J.R.R. Tolkien", progress: 74, image: lotr },
+        { id: 9, title: "Brave New World", author: "Aldous Huxley", progress: 41, image: brave },
     ];
     const wishListBooks = [
         { id: 1, title: "The Midnight Library", author: "Matt Haig", progress: 0, image: midnightLibrary },
@@ -82,9 +96,9 @@ const ProfilePage = () => {
         { id: 4, title: "A Man Called Ove", author: "Fredrik Backman", progress: 0, image: manCalledOve },
         { id: 5, title: "Verity", author: "Colleen Hoover", progress: 0, image: verity },
         { id: 6, title: "Lessons in Chemistry", author: "Bonnie Garmus", progress: 0, image: lessonsInChemistry },
-        { id: 7, title: "Project Hail Mary", author: "Andy Weir", progress: 0, image: hailMary },
-      ];
-    
+        { id: 7, title: "Project Hail Mary", author: "Andy Weir", progress: 0, image: hailMary },
+    ];
+
     // Styles for the profile page
     const styles = {
         pageContainer: {
@@ -100,12 +114,12 @@ const ProfilePage = () => {
             overflow: 'hidden',
         },
         bookshelfImage: {
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          objectPosition: '50% 20%', // Adjusts the focus 20% from the top
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: '50% 20%', // Adjusts the focus 20% from the top
         },
-        
+
         bookImage: {
             width: '100%',  // Fill the card width
             height: '280px', // Taller height for book images
@@ -217,7 +231,7 @@ const ProfilePage = () => {
             padding: '20px 0',
         },
         carouselItem: {
-            padding: '15px 0', 
+            padding: '15px 0',
         },
         bookCardContent: {
             padding: '15px',
@@ -228,7 +242,7 @@ const ProfilePage = () => {
             background: 'rgba(93, 64, 55, 0.3)',
             borderRadius: '50%',
             height: '40px',
-            width: '40px', 
+            width: '40px',
             margin: 'auto 10px',
             display: 'flex',
             alignItems: 'center',
@@ -247,16 +261,16 @@ const ProfilePage = () => {
                             <div className="d-flex justify-content-center">
                                 {currentlyReadingBooks.slice(i * 5, (i + 1) * 5).map(book => (
                                     <div key={book.id} style={styles.bookCard}>
-                                        <img 
-                                            src={book.image} 
-                                            alt={book.title} 
-                                            style={styles.bookImage} 
+                                        <img
+                                            src={book.image}
+                                            alt={book.title}
+                                            style={styles.bookImage}
                                         />
                                         <div style={styles.bookCardContent}>
                                             <h5 className="fs-6 text-center">{book.title}</h5>
                                             <p className="text-center text-muted small">{book.author}</p>
                                             <div style={styles.progressContainer}>
-                                                <div style={{...styles.progressBar, width: `${book.progress}%`}}></div>
+                                                <div style={{ ...styles.progressBar, width: `${book.progress}%` }}></div>
                                             </div>
                                             <div style={styles.progressText}>{book.progress}% completed</div>
                                         </div>
@@ -277,7 +291,7 @@ const ProfilePage = () => {
             </div>
         </div>
     );
-     const wishListContent = (
+    const wishListContent = (
         <div>
             <h3 className="text-center mb-4 text-white">Go read</h3>
             <div id="booksCarousel" className="carousel slide" data-bs-ride="carousel">
@@ -287,10 +301,10 @@ const ProfilePage = () => {
                             <div className="d-flex justify-content-center">
                                 {wishListBooks.slice(i * 5, (i + 1) * 5).map(book => (
                                     <div key={book.id} style={styles.bookCard}>
-                                        <img 
-                                            src={book.image} 
-                                            alt={book.title} 
-                                            style={styles.bookImage} 
+                                        <img
+                                            src={book.image}
+                                            alt={book.title}
+                                            style={styles.bookImage}
                                         />
                                         <div style={styles.bookCardContent}>
                                             <h5 className="fs-6 text-center">{book.title}</h5>
@@ -317,7 +331,7 @@ const ProfilePage = () => {
     // Content components for each tab
     const tabContents = {
         reads: newReadsContent, // Using the new carousel
-        wishlist:wishListContent,
+        wishlist: wishListContent,
         completed: wishListContent,
         notifications: <div className="text-center p-5">Your library notifications appear here</div>,
     };
@@ -331,7 +345,7 @@ const ProfilePage = () => {
                     <div style={styles.profileIcon}>
                         <BsPerson size={50} color="#5D3F37" />
                     </div>
-                    <div style={styles.userName}>UserName</div>
+                    <div style={styles.userName}>{userEmail}</div>
                 </div>
             </div>
 
@@ -339,8 +353,8 @@ const ProfilePage = () => {
             <div style={styles.navContainer}>
                 <Nav style={styles.navTabs}>
                     <div
-                        style={{ 
-                            ...styles.navTab, 
+                        style={{
+                            ...styles.navTab,
                             ...(activeTab === 'reads' ? styles.activeTab : {}),
                             ...(hoveredTab === 'reads' ? styles.navTabHover : {})
                         }}
@@ -351,8 +365,8 @@ const ProfilePage = () => {
                         Reads
                     </div>
                     <div
-                        style={{ 
-                            ...styles.navTab, 
+                        style={{
+                            ...styles.navTab,
                             ...(activeTab === 'wishlist' ? styles.activeTab : {}),
                             ...(hoveredTab === 'wishlist' ? styles.navTabHover : {})
                         }}
@@ -363,8 +377,8 @@ const ProfilePage = () => {
                         Wishlist
                     </div>
                     <div
-                        style={{ 
-                            ...styles.navTab, 
+                        style={{
+                            ...styles.navTab,
                             ...(activeTab === 'completed' ? styles.activeTab : {}),
                             ...(hoveredTab === 'completed' ? styles.navTabHover : {})
                         }}
@@ -375,8 +389,8 @@ const ProfilePage = () => {
                         Completed
                     </div>
                     <div
-                        style={{ 
-                            ...styles.navTab, 
+                        style={{
+                            ...styles.navTab,
                             ...(activeTab === 'notifications' ? styles.activeTab : {}),
                             ...(hoveredTab === 'notifications' ? styles.navTabHover : {})
                         }}

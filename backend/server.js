@@ -7,6 +7,7 @@ const bookRoutes = require("./routes/bookRoutes"); // Import routes
 const handlereviews = require("./routes/handlereviews"); // Import routes
 const handlePayement = require("./routes/handlerRzorpay"); // Import routes
 const wishlistRoutes = require("./routes/handleWIshlist");
+const authRoutes = require('./routes/auth');
 
 
 
@@ -21,6 +22,7 @@ app.use("/books", bookRoutes);
 app.use("/reviews", handlereviews);
 app.use("/rzpay", handlePayement);  // Use book routes
 app.use("/wishlist", wishlistRoutes);
+app.use('/api/auth', authRoutes);
 // ➤ MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, { 
   useNewUrlParser: true, 
