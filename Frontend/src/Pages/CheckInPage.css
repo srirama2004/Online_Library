@@ -32,7 +32,7 @@
   }
   
   .checked-in {
-    background-color: #4caf50; /* green */
+    background-color: #800b0b; /* green */
     color: white;
     border: none;
   }
@@ -92,9 +92,9 @@
   }
   
   .day.checked-in {
-    background-color: #00c853; /* Bright green for checked-in days */
+    background-color: #800b0b; /* Bright green for checked-in days */
     color: #ffffff;
-    border: 1px solid #00c853;
+    border: 1px solid #800b0b;
   }
   
   button {

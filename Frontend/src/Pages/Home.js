@@ -1,26 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useCallback } from "react";
 import Slider from "react-slick";
 import { Container, Button, Card, Row, Col } from "react-bootstrap";
 import Menu from "./Menu";
+import { useNavigate } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
-import { useNavigate } from "react-router-dom";
 
 function Home() {
   const navigate = useNavigate();
-  const [books, setTopBooks] = useState([]);
+  const [books, setBooks] = useState([]);
   const [booksByCategory, setBooksByCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("General");
   const [searchQuery, setSearchQuery] = useState("");
+  const [userEmail] = useState(null); // 🛠️ Add userEmail state
+  const checkInAndUpdateStreak = useCallback(async (email) => {
+    try {
+      const today = new Date().toISOString().split('T')[0]; 
+      const response = await fetch(`http://localhost:5000/checkins`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email,date: today })
+      });
 
+      const data = await response.json();
+      console.log('Check-in Response:', data);
+      if(data.message !=="Already checked in today"){
+        window.alert("🪙 +1 Coin Earned!");
+      }
+    } catch (error) {
+      console.error('Error during check-in:', error);
+    }
+  }, []); // no dependencies inside, so []
+
+  useEffect(() => {
+    const email = localStorage.getItem('userEmail');
+    if (email) {
+      checkInAndUpdateStreak(email); 
+    }
+  }, [checkInAndUpdateStreak]);
+  // Fetch books (popular books)
   useEffect(() => {
     fetch("http://localhost:5000/books/all")
       .then((res) => res.json())
-      .then((data) => setTopBooks(data))
+      .then((data) => setBooks(data))
       .catch((err) => console.error("Error fetching top books:", err));
   }, []);
 
+  // Fetch books by category
   useEffect(() => {
     fetch(`http://localhost:5000/books/${selectedCategory}`)
       .then((res) => res.json())
@@ -28,14 +55,25 @@ function Home() {
       .catch((err) => console.error(`Error fetching books for ${selectedCategory}:`, err));
   }, [selectedCategory]);
 
+  // Handle search
   const filteredBooks = searchQuery
-  ? books.filter(
-      (book) =>
-        book.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        book.description?.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  : booksByCategory;
+    ? books.filter(
+        (book) =>
+          book.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          book.description?.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : booksByCategory;
 
+  // Handle clicking a book
+  const handleBookClick = (bookId) => {
+    const email = localStorage.getItem('userEmail');
+    if (email) {
+      navigate(`/book/${bookId}`);
+    } else {
+      console.log(email);
+      navigate("/signin");
+    }
+  };
 
   return (
     <>
@@ -58,35 +96,54 @@ function Home() {
                   autoplaySpeed={2000}
                 >
                   {books.map((book, idx) => (
-                    <div key={idx} className="carousel-item" onClick={() => navigate(`/book/${book.bookId}`)}>
-                      <img src={book.image} alt={`Book ${idx + 1}`} className="book-image" />
+                    <div
+                      key={idx}
+                      className="carousel-item"
+                      onClick={() => handleBookClick(book.bookId)}
+                    >
+                      <img
+                        src={book.image}
+                        alt={`Book ${idx + 1}`}
+                        className="book-image"
+                      />
                     </div>
                   ))}
                 </Slider>
               </div>
+
               <div className="mt-4">
-                {["General", "Drama", "Horror", "Thriller", "Fantasy", "Romantic"].map((category) => (
-                  <Button
-                    key={category}
-                    variant={selectedCategory === category ? "primary" : "dark"}
-                    className="mx-2"
-                    onClick={() => {
-                      setSelectedCategory(category);
-                      setSearchQuery("");
-                    }}
-                  >
-                    {category}
-                  </Button>
-                ))}
+                {["General", "Drama", "Horror", "Thriller", "Fantasy", "Romantic"].map(
+                  (category) => (
+                    <Button
+                      key={category}
+                      variant={selectedCategory === category ? "primary" : "dark"}
+                      className="mx-2"
+                      onClick={() => {
+                        setSelectedCategory(category);
+                        setSearchQuery(""); // Clear search when category changes
+                      }}
+                    >
+                      {category}
+                    </Button>
+                  )
+                )}
               </div>
             </>
           )}
+
           <Row className="mt-4">
             {filteredBooks.length > 0 ? (
               filteredBooks.map((book) => (
                 <Col key={book._id} md={4} className="mb-4">
-                  <Card className="books1-card" onClick={() => navigate(`/book/${book.bookId}`)}>
-                    <Card.Img variant="top" src={book.image} className="book-image" />
+                  <Card
+                    className="books1-card"
+                    onClick={() => handleBookClick(book.bookId)}
+                  >
+                    <Card.Img
+                      variant="top"
+                      src={book.image}
+                      className="book-image"
+                    />
                   </Card>
                 </Col>
               ))

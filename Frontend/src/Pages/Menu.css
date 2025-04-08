@@ -134,3 +134,60 @@
       color: black !important;;
     }
   }
+  .menu-bar {
+  background-color: #f8f9fa; /* Light navbar */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.search-container {
+  margin-top: 10px;
+}
+
+.search-input {
+  width: 300px;
+  max-width: 90%;
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+.profile-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.profile-toggle {
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 0;
+}
+
+.profile-menu {
+  background-color: #4d4d4d;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  min-width: 200px;
+  margin-top: 10px;
+}
+
+.profile-email {
+  font-size: 14px;
+  color: #353535;
+  padding: 10px 20px;
+}
+
+.logout-btn {
+  color: #b41626;
+  font-weight: 500;
+  padding: 10px 20px;
+}
+
+.logout-btn:hover {
+  background-color: #d31b2a;
+  color: #c82333;
+}
