@@ -9,6 +9,7 @@ const bookRoutes = require("./routes/bookRoutes"); // Import routes
 const handlereviews = require("./routes/handlereviews"); // Import routes
 const handlePayement = require("./routes/handlerRzorpay"); // Import routes
 const wishlistRoutes = require("./routes/handleWIshlist");//C:\Users\user\Desktop\VI sem\FC\Prooject\Online_Library\backend\routes\handleWIshlist.js
+const currentReadRoutes = require("./routes/handleCurrentRead"); // Import routes
 const authRoutes = require('./routes/auth');
 
 
@@ -34,6 +35,7 @@ app.use("/books", bookRoutes);
 app.use("/reviews", handlereviews);
 app.use("/rzpay", handlePayement);  // Use book routes
 app.use("/wishlist", wishlistRoutes);
+app.use("/currentRead", currentReadRoutes); // Use book routes
 app.use('/api/auth', authRoutes);
 
 

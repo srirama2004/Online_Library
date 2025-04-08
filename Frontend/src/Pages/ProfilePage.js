@@ -32,6 +32,8 @@ const ProfilePage = () => {
     const [userEmail, setUserEmail] = useState(null);
     const [purchasedBooks, setPurchasedBooks] = useState([]);
     const [wishlistBooks, setWishlistBooks] = useState([]);
+    const [currentReads, setCurrentReads] = useState([]);
+
     const navigate = useNavigate();
 
     const location = useLocation();
@@ -80,6 +82,22 @@ const ProfilePage = () => {
                 });
         }
     }, [userId]);
+
+    // NEW: Fetch currentReads books dynamically
+    useEffect(() => {
+        if (userId) {
+          console.log("Fetching current reads for userId:", userId);
+          axios.get(`http://localhost:5000/currentread/all/${userId}`)
+            .then(response => {
+              console.log("Current reads fetched:", response.data);
+              setCurrentReads(response.data);
+            })
+            .catch(err => {
+              console.error("Error fetching current reads:", err);
+            });
+        }
+      }, [userId]);
+      
 
     // Initialize Bootstrap carousel after component fully renders
     useEffect(() => {
@@ -433,6 +451,67 @@ const ProfilePage = () => {
         <div className="text-center p-5 text-white">No books in wishlist yet.</div>
     );
 
+    const currentReadsContent = currentReads.length > 0 ? (
+        <div>
+          <h3 className="text-center mb-4 text-white">Current Reads</h3>
+          <div id="currentReadsCarousel" className="carousel slide" data-bs-ride="carousel">
+            <div className="carousel-inner" style={styles.carouselInner}>
+              {Array.from({ length: Math.ceil(currentReads.length / 4) }, (_, i) => (
+                <div
+                  key={i}
+                  className={`carousel-item ${i === 0 ? 'active' : ''}`}
+                  style={styles.carouselItem}
+                >
+                  <div className="d-flex justify-content-center">
+                    {currentReads.slice(i * 4, (i + 1) * 4).map((book) => (
+                      <div
+                        key={book.bookId}
+                        style={styles.bookCard}
+                        onClick={() => navigate(`/book/${book.bookId}`)}
+                      >
+                        <img
+                          src={book.image}
+                          alt={book.title}
+                          style={styles.bookImage}
+                        />
+                        <div style={styles.bookCardContent}>
+                          <h5 className="fs-6 text-center fw-bold" style={{ color: 'black' }}>
+                            {book.title}
+                          </h5>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button
+              className="carousel-control-prev"
+              type="button"
+              data-bs-target="#currentReadsCarousel"
+              data-bs-slide="prev"
+              style={styles.carouselControl}
+            >
+              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Previous</span>
+            </button>
+            <button
+              className="carousel-control-next"
+              type="button"
+              data-bs-target="#currentReadsCarousel"
+              data-bs-slide="next"
+              style={styles.carouselControl}
+            >
+              <span className="carousel-control-next-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="text-center p-5 text-white">No current reads yet.</div>
+      );
+      
+
     const purchasedContent = purchasedBooks.length > 0 ? (
         <div>
             <h3 className="text-center mb-4 text-white">Purchased Books</h3>
@@ -527,7 +606,7 @@ const ProfilePage = () => {
     //     )
     // };
     const tabContents = {
-        reads: newReadsContent,
+        reads: currentReadsContent, // Updated to use the new carousel
         wishlist: wishListContent,
         completed: wishListContent, // example - you can change accordingly
         notifications: purchasedContent, // Purchased books tab now shows a grid layout
