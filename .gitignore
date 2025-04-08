@@ -41,6 +41,7 @@ coverage/
 .env.test.local
 .env.production.local
 
+
 # React Native
 .expo/
 *.expo

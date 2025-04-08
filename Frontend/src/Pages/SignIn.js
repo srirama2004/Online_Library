@@ -23,11 +23,11 @@ const SignIn = () => {
         if (!username) {
             setMessage('Please enter email');
             return;
-          }
-          if (!password) {
+        }
+        if (!password) {
             setMessage('Please enter password');
             return;
-          }
+        }
         try {
             const response = await fetch('http://localhost:5000/api/auth/signin', {
                 method: 'POST',
@@ -147,7 +147,7 @@ const SignIn = () => {
             textDecoration: 'none',
         },
         signinButton: {
-            backgroundColor: '#8B1E3F', // Maroon
+            backgroundColor: '#57473a', 
             borderColor: '#8B1E3F',
             borderRadius: '8px',
             padding: '0.75rem',
@@ -269,10 +269,17 @@ const SignIn = () => {
                                 </div>
 
                                 <div style={styles.socialButtonsContainer}>
-                                    <Button variant="outline-secondary" style={styles.socialButton}>
+                                    {/* <Button variant="outline-secondary" style={styles.socialButton}>
+                                        <FcGoogle style={{ color: "#4285F4", marginRight: "8px" }} />
+                                        Google
+                                    </Button> */}
+                                    <Button variant="outline-secondary" style={styles.socialButton}
+                                        href="http://localhost:5000/api/auth/google"
+                                    >
                                         <FcGoogle style={{ color: "#4285F4", marginRight: "8px" }} />
                                         Google
                                     </Button>
+
                                 </div>
 
                                 <div className="text-center">

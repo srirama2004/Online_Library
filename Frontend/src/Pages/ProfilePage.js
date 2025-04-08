@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation  } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Nav } from 'react-bootstrap';
+import { Container, Row, Col, Nav, Card } from 'react-bootstrap';
 import { BsPerson } from 'react-icons/bs';
 import pic from "../images/pic1.jpg";
 import gatsby from "../images/greatGatsby.png";
@@ -20,29 +20,84 @@ import manCalledOve from '../images/ove.png'
 import verity from '../images/verity.png'
 import lessonsInChemistry from '../images/lessons.png'
 import hailMary from '../images/hailmary.png'
+import axios from 'axios';
+import Carousel from 'react-bootstrap/Carousel';
+
+
 
 const ProfilePage = () => {
     const [activeTab, setActiveTab] = useState('reads');
     const [hoveredTab, setHoveredTab] = useState(null);
-
     const [userId, setUserId] = useState(null);
     const [userEmail, setUserEmail] = useState(null);
+    const [purchasedBooks, setPurchasedBooks] = useState([]);
+    const [wishlistBooks, setWishlistBooks] = useState([]);
+    const [currentReads, setCurrentReads] = useState([]);
 
+    const navigate = useNavigate();
 
+    const location = useLocation();
+    
+
+    // Retrieve userId and userEmail from localStorage
     useEffect(() => {
         const storedUserId = localStorage.getItem('userId');
+        console.log("Retrieved userId from localStorage:", storedUserId);
         setUserId(storedUserId);
-    }, []);
-
-    useEffect(() => {
         const storedUserEmail = localStorage.getItem('userEmail');
+        console.log("Retrieved userEmail from localStorage:", storedUserEmail);
         setUserEmail(storedUserEmail);
     }, []);
-    const navigate = useNavigate();
+
+    // Fetch purchased books using the current userId
+    useEffect(() => {
+        if (userId) {
+            console.log("Fetching purchased books for userId:", userId);
+            axios.get(`http://localhost:5000/books/user-orders/${userId}`)
+                .then(response => {
+                    console.log("Purchased books fetched:", response.data);
+                    setPurchasedBooks(response.data);
+                })
+                .catch(err => {
+                    console.error("Error fetching purchased books:", err);
+                });
+        }
+    }, [userId]);
 
     const handleTabSelect = (tab) => {
         setActiveTab(tab);
     };
+
+    // NEW: Fetch wishlist books dynamically
+    useEffect(() => {
+        if (userId) {
+            console.log("Fetching wishlist for userId:", userId);
+            axios.get(`http://localhost:5000/wishlist/all/${userId}`)
+                .then(response => {
+                    console.log("Wishlist books fetched:", response.data);
+                    setWishlistBooks(response.data);
+                })
+                .catch(err => {
+                    console.error("Error fetching wishlist books:", err);
+                });
+        }
+    }, [userId]);
+
+    // NEW: Fetch currentReads books dynamically
+    useEffect(() => {
+        if (userId) {
+          console.log("Fetching current reads for userId:", userId);
+          axios.get(`http://localhost:5000/currentread/all/${userId}`)
+            .then(response => {
+              console.log("Current reads fetched:", response.data);
+              setCurrentReads(response.data);
+            })
+            .catch(err => {
+              console.error("Error fetching current reads:", err);
+            });
+        }
+      }, [userId]);
+      
 
     // Initialize Bootstrap carousel after component fully renders
     useEffect(() => {
@@ -101,6 +156,8 @@ const ProfilePage = () => {
         { id: 7, title: "Project Hail Mary", author: "Andy Weir", progress: 0, image: hailMary },
     ];
 
+
+
     // Styles for the profile page
     const styles = {
         pageContainer: {
@@ -127,6 +184,11 @@ const ProfilePage = () => {
             height: '280px', // Taller height for book images
             objectFit: 'cover',
             borderRadius: '5px 5px 0 0', // Rounded corners only on top
+        },
+        fullHeightImage: {
+            width: "100%",
+            height: "100%",
+            objectFit: "fill",
         },
         profileOverlay: {
             position: 'absolute',
@@ -204,7 +266,7 @@ const ProfilePage = () => {
             overflow: 'hidden',
             height: '10px',
             marginTop: '10px',
-            color:'black'
+            color: 'black'
         },
         progressBar: {
             height: '100%',
@@ -294,24 +356,68 @@ const ProfilePage = () => {
             </div>
         </div>
     );
-    const wishListContent = (
+    // const wishListContent = (
+    //     <div>
+    //         <h3 className="text-center mb-4 text-white">Go read</h3>
+    //         <div id="wishListCarousel" className="carousel slide" data-bs-ride="carousel">
+    //             <div className="carousel-inner" style={styles.carouselInner}>
+    //                 {Array.from({ length: Math.ceil(wishListBooks.length / 5) }, (_, i) => (
+    //                     <div key={i} className={`carousel-item ${i === 0 ? 'active' : ''}`} style={styles.carouselItem}>
+    //                         <div className="d-flex justify-content-center">
+    //                             {wishListBooks.slice(i * 5, (i + 1) * 5).map(book => (
+    //                                 <div key={book.id} style={styles.bookCard}>
+    //                                     <img
+    //                                         src={book.image}
+    //                                         alt={book.title}
+    //                                         style={styles.bookImage}
+    //                                     />
+    //                                     <div style={styles.bookCardContent}>
+    //                                         <h5 className="fs-6 text-center">{book.title}</h5>
+    //                                         <p className="text-center text-muted small">{book.author}</p>
+    //                                     </div>
+    //                                 </div>
+    //                             ))}
+    //                         </div>
+    //                     </div>
+    //                 ))}
+    //             </div>
+    //             <button className="carousel-control-prev" type="button" data-bs-target="#wishListCarousel" data-bs-slide="prev" style={styles.carouselControl}>
+    //                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+    //                 <span className="visually-hidden">Previous</span>
+    //             </button>
+    //             <button className="carousel-control-next" type="button" data-bs-target="#wishListCarousel" data-bs-slide="next" style={styles.carouselControl}>
+    //                 <span className="carousel-control-next-icon" aria-hidden="true"></span>
+    //                 <span className="visually-hidden">Next</span>
+    //             </button>
+    //         </div>
+    //     </div>
+    // );
+
+    const wishListContent = wishlistBooks.length > 0 ? (
         <div>
-            <h3 className="text-center mb-4 text-white">Go read</h3>
-            <div id="wishListCarousel" className="carousel slide" data-bs-ride="carousel">
+            <h3 className="text-center mb-4 text-white">Your Wishlist</h3>
+            <div id="wishlistCarousel" className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-inner" style={styles.carouselInner}>
-                    {Array.from({ length: Math.ceil(wishListBooks.length / 5) }, (_, i) => (
-                        <div key={i} className={`carousel-item ${i === 0 ? 'active' : ''}`} style={styles.carouselItem}>
+                    {Array.from({ length: Math.ceil(wishlistBooks.length / 4) }, (_, i) => (
+                        <div
+                            key={i}
+                            className={`carousel-item ${i === 0 ? 'active' : ''}`}
+                            style={styles.carouselItem}
+                        >
                             <div className="d-flex justify-content-center">
-                                {wishListBooks.slice(i * 5, (i + 1) * 5).map(book => (
-                                    <div key={book.id} style={styles.bookCard}>
+                                {wishlistBooks.slice(i * 4, (i + 1) * 4).map((book) => (
+                                    <div
+                                        key={book.bookId}
+                                        style={styles.bookCard}
+                                        onClick={() => navigate(`/book/${book.bookId}`)}
+                                    >
                                         <img
                                             src={book.image}
                                             alt={book.title}
                                             style={styles.bookImage}
                                         />
                                         <div style={styles.bookCardContent}>
-                                            <h5 className="fs-6 text-center">{book.title}</h5>
-                                            <p className="text-center text-muted small">{book.author}</p>
+                                            <h5 className="fs-6 text-center fw-bold" style={{ color: 'black' }}>{book.title}</h5>
                                         </div>
                                     </div>
                                 ))}
@@ -319,70 +425,235 @@ const ProfilePage = () => {
                         </div>
                     ))}
                 </div>
-                <button className="carousel-control-prev" type="button" data-bs-target="#wishListCarousel" data-bs-slide="prev" style={styles.carouselControl}>
+                <button
+                    className="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#wishlistCarousel"
+                    data-bs-slide="prev"
+                    style={styles.carouselControl}
+                >
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Previous</span>
                 </button>
-                <button className="carousel-control-next" type="button" data-bs-target="#wishListCarousel" data-bs-slide="next" style={styles.carouselControl}>
+                <button
+                    className="carousel-control-next"
+                    type="button"
+                    data-bs-target="#wishlistCarousel"
+                    data-bs-slide="next"
+                    style={styles.carouselControl}
+                >
                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Next</span>
                 </button>
             </div>
         </div>
+    ) : (
+        <div className="text-center p-5 text-white">No books in wishlist yet.</div>
     );
 
+    const currentReadsContent = currentReads.length > 0 ? (
+        <div>
+          <h3 className="text-center mb-4 text-white">Current Reads</h3>
+          <div id="currentReadsCarousel" className="carousel slide" data-bs-ride="carousel">
+            <div className="carousel-inner" style={styles.carouselInner}>
+              {Array.from({ length: Math.ceil(currentReads.length / 4) }, (_, i) => (
+                <div
+                  key={i}
+                  className={`carousel-item ${i === 0 ? 'active' : ''}`}
+                  style={styles.carouselItem}
+                >
+                  <div className="d-flex justify-content-center">
+                    {currentReads.slice(i * 4, (i + 1) * 4).map((book) => (
+                      <div
+                        key={book.bookId}
+                        style={styles.bookCard}
+                        onClick={() => navigate(`/book/${book.bookId}`)}
+                      >
+                        <img
+                          src={book.image}
+                          alt={book.title}
+                          style={styles.bookImage}
+                        />
+                        <div style={styles.bookCardContent}>
+                          <h5 className="fs-6 text-center fw-bold" style={{ color: 'black' }}>
+                            {book.title}
+                          </h5>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button
+              className="carousel-control-prev"
+              type="button"
+              data-bs-target="#currentReadsCarousel"
+              data-bs-slide="prev"
+              style={styles.carouselControl}
+            >
+              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Previous</span>
+            </button>
+            <button
+              className="carousel-control-next"
+              type="button"
+              data-bs-target="#currentReadsCarousel"
+              data-bs-slide="next"
+              style={styles.carouselControl}
+            >
+              <span className="carousel-control-next-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="text-center p-5 text-white">No current reads yet.</div>
+      );
+      
+
+    const purchasedContent = purchasedBooks.length > 0 ? (
+        <div>
+            <h3 className="text-center mb-4 text-white">Purchased Books</h3>
+            <div id="purchasedCarousel" className="carousel slide" data-bs-ride="carousel">
+                <div className="carousel-inner" style={styles.carouselInner}>
+                    {Array.from({ length: Math.ceil(purchasedBooks.length / 4) }, (_, i) => (
+                        <div
+                            key={i}
+                            className={`carousel-item ${i === 0 ? 'active' : ''}`}
+                            style={styles.carouselItem}
+                        >
+                            <div className="d-flex justify-content-center">
+                                {purchasedBooks.slice(i * 4, (i + 1) * 4).map((book) => (
+                                    <div
+                                        key={book.bookId}
+                                        style={styles.bookCard}
+                                        onClick={() => navigate(`/book/${book.bookId}`)}
+                                    >
+                                        <img
+                                            src={book.image}
+                                            alt={book.title}
+                                            style={styles.bookImage}
+                                        />
+                                        <div style={styles.bookCardContent}>
+                                            <h5 className="fs-6 text-center fw-bold" style={{ color: 'black' }}>
+                                                {book.title}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                <button
+                    className="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#purchasedCarousel"
+                    data-bs-slide="prev"
+                    style={styles.carouselControl}
+                >
+                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Previous</span>
+                </button>
+                <button
+                    className="carousel-control-next"
+                    type="button"
+                    data-bs-target="#purchasedCarousel"
+                    data-bs-slide="next"
+                    style={styles.carouselControl}
+                >
+                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    ) : (
+        <div className="text-center p-5 text-white">No purchased books yet.</div>
+    );
+
+
     // Content components for each tab
+    // const tabContents = {
+    //     reads: newReadsContent,
+    //     wishlist: wishListContent,
+    //     completed: wishListContent,
+    //     notifications: notifications.length > 0 ? (
+    //         <div className="p-5">
+    //             <h4 className="text-white mb-3">Purchased Books</h4>
+    //             <Carousel interval={3000}>
+    //                 {notifications.map((book, index) => (
+    //                     <Carousel.Item key={index}>
+    //                         <div className="d-flex justify-content-center">
+    //                             <div className="card" style={{ width: '18rem' }}>
+    //                                 <img
+    //                                     src={book.image}
+    //                                     className="card-img-top"
+    //                                     alt={book.title}
+    //                                 />
+    //                                 <div className="card-body">
+    //                                     <h5 className="card-title">{book.title}</h5>
+    //                                     <p className="card-text">{book.abstract}</p>
+    //                                 </div>
+    //                             </div>
+    //                         </div>
+    //                     </Carousel.Item>
+    //                 ))}
+    //             </Carousel>
+    //         </div>
+    //     ) : (
+    //         <div className="text-center p-5 text-white">No books purchased yet.</div>
+    //     )
+    // };
     const tabContents = {
-        reads: newReadsContent, // Using the new carousel
+        reads: currentReadsContent, // Updated to use the new carousel
         wishlist: wishListContent,
-        completed: wishListContent,
-        notifications: <div className="text-center p-5">Your library notifications appear here</div>,
+        completed: wishListContent, // example - you can change accordingly
+        notifications: purchasedContent, // Purchased books tab now shows a grid layout
     };
+
+
 
     return (
         <Container fluid style={styles.pageContainer} className="p-0">
-            {/* Header with bookshelf background and profile icon */}
+            {/* Header Section */}
             <div style={{ position: 'relative' }}>
-  {/* Back Button - Top Left */}
-  <button 
-    onClick={() => navigate('/')} 
-    style={{
-      position: 'absolute',
-      top: 20,
-      left: 20,
-      backgroundColor: '#382e25',
-      color: 'white',
-      padding: '10px 16px',
-      border: 'none',
-      borderRadius: '6px',
-      cursor: 'pointer',
-      zIndex: 10
-    }}
-  >
-    ← Back to Home
-  </button>
+                <button
+                    onClick={() => navigate('/')}
+                    style={{
+                        position: 'absolute',
+                        top: 20,
+                        left: 20,
+                        backgroundColor: '#382e25',
+                        color: 'white',
+                        padding: '10px 16px',
+                        border: 'none',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        zIndex: 10,
+                    }}
+                >
+                    ← Back to Home
+                </button>
+                <div style={styles.headerSection}>
+                    <img src={pic} alt="Library shelves" style={styles.fullHeightImage} />
+                    <div style={styles.profileOverlay}>
+                        <div style={styles.profileIcon}>
+                            <BsPerson size={50} color="#5D3F37" />
+                        </div>
+                        <div style={styles.userName}>{userEmail}</div>
+                    </div>
+                </div>
+            </div>
 
-  {/* Header Section */}
-  <div style={styles.headerSection}>
-    <img src={pic} alt="Library shelves" style={styles.fullHeightImage} />
-    <div style={styles.profileOverlay}>
-      <div style={styles.profileIcon}>
-        <BsPerson size={50} color="#5D3F37" />
-      </div>
-      <div style={styles.userName}>{userEmail}</div>
-    </div>
-  </div>
-</div>
-
-
-            {/* Navigation tabs */}
+            {/* Navigation Tabs */}
             <div style={styles.navContainer}>
                 <Nav style={styles.navTabs}>
                     <div
                         style={{
                             ...styles.navTab,
                             ...(activeTab === 'reads' ? styles.activeTab : {}),
-                            ...(hoveredTab === 'reads' ? styles.navTabHover : {})
+                            ...(hoveredTab === 'reads' ? styles.navTabHover : {}),
                         }}
                         onClick={() => handleTabSelect('reads')}
                         onMouseEnter={() => setHoveredTab('reads')}
@@ -394,7 +665,7 @@ const ProfilePage = () => {
                         style={{
                             ...styles.navTab,
                             ...(activeTab === 'wishlist' ? styles.activeTab : {}),
-                            ...(hoveredTab === 'wishlist' ? styles.navTabHover : {})
+                            ...(hoveredTab === 'wishlist' ? styles.navTabHover : {}),
                         }}
                         onClick={() => handleTabSelect('wishlist')}
                         onMouseEnter={() => setHoveredTab('wishlist')}
@@ -406,7 +677,7 @@ const ProfilePage = () => {
                         style={{
                             ...styles.navTab,
                             ...(activeTab === 'completed' ? styles.activeTab : {}),
-                            ...(hoveredTab === 'completed' ? styles.navTabHover : {})
+                            ...(hoveredTab === 'completed' ? styles.navTabHover : {}),
                         }}
                         onClick={() => handleTabSelect('completed')}
                         onMouseEnter={() => setHoveredTab('completed')}
@@ -418,18 +689,18 @@ const ProfilePage = () => {
                         style={{
                             ...styles.navTab,
                             ...(activeTab === 'notifications' ? styles.activeTab : {}),
-                            ...(hoveredTab === 'notifications' ? styles.navTabHover : {})
+                            ...(hoveredTab === 'notifications' ? styles.navTabHover : {}),
                         }}
                         onClick={() => handleTabSelect('notifications')}
                         onMouseEnter={() => setHoveredTab('notifications')}
                         onMouseLeave={() => setHoveredTab(null)}
                     >
-                        Notifications
+                        Purchased
                     </div>
                 </Nav>
             </div>
 
-            {/* Content area */}
+            {/* Content Area */}
             <div style={styles.contentArea}>
                 <div style={styles.tabContent}>
                     {tabContents[activeTab]}

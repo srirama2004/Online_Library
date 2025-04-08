@@ -4,11 +4,13 @@ import "./styles.css";
 import ReviewSection from "./ReviewSection";
 import RazorpayButton from "./RazorPayButton";
 import WishlistButton from "./WishlistButton";
-
+import ReadNowButton from "./ReadNowButton";
 
 const BookReview = () => {
 
-  const userId = "123"; // Replace this with actual logged-in user ID
+  // const userId = "123"; // Replace this with actual logged-in user ID
+  const userId = localStorage.getItem("userId");
+
 
   const { id } = useParams(); 
   const navigate = useNavigate(); 
@@ -108,12 +110,7 @@ const BookReview = () => {
         <div className="book_button">
          
             {(book.price === 0 || ownsBook )? (
-              <button 
-              className={book.price === "Free" ? "read-button" : "buy-button"}
-             
-              onClick={handleButtonClick}>
-                Read Now
-              </button>
+              < ReadNowButton userId={userId} bookId={id} /> 
             ) : (
               <RazorpayButton amount={book.price} bookId={id} user={{
                 id: userId}} onSuccess={handleButtonClick} ></RazorpayButton>
