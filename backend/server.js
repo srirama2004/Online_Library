@@ -11,7 +11,8 @@ const handlePayement = require("./routes/handlerRzorpay"); // Import routes
 const wishlistRoutes = require("./routes/handleWIshlist");//C:\Users\user\Desktop\VI sem\FC\Prooject\Online_Library\backend\routes\handleWIshlist.js
 const currentReadRoutes = require("./routes/handleCurrentRead"); // Import routes
 const authRoutes = require('./routes/auth');
-
+const CheckIn = require('./routes/checkins');
+const bookc = require('./routes/bookcroutes');
 
 require("dotenv").config();
  // Import Model
@@ -37,8 +38,8 @@ app.use("/rzpay", handlePayement);  // Use book routes
 app.use("/wishlist", wishlistRoutes);
 app.use("/currentRead", currentReadRoutes); // Use book routes
 app.use('/api/auth', authRoutes);
-
-
+app.use('/checkins',CheckIn);
+app.use('/bookc',bookc);
 // ➤ MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, { 
   useNewUrlParser: true, 

@@ -64,7 +64,7 @@ const BookReview = () => {
 
   const handleButtonClick = () => {
     if (book?.price === 0 || ownsBook) {
-      navigate("/bookviewer"); // ✅ Allow read
+      navigate(`/bookviewer/${userId}/${id}`); // ✅ Allow read
     } else {
       console.log("Proceeding to purchase for", book?.price);
       // open Razorpay flow or go to checkout

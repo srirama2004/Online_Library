@@ -1,19 +1,38 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
-import "./BookViewer.css"; // Ensure CSS file is updated
-import bookCover from "../Components/g1.jpg"; // Example book image
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate, useParams } from "react-router-dom"; 
+import axios from "axios";
+import "./BookViewer.css";
+import Menum from "./Menum";
 const BookViewer = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const [fontSize, setFontSize] = useState(18); // Default font size
+  const [fontSize, setFontSize] = useState(18);
+  const [book, setBook] = useState(null);
+  const [currentPage, setCurrentPage] = useState(0); // 📄 track which page
   const bookContainerRef = useRef(null);
-const navigate = useNavigate(); 
-  // Apply dark mode styling to body
+  const navigate = useNavigate();
+ const { userId, bookId1 } = useParams();
+  const wordsPerPage = 100; // 📄 words you want per "page"
+const bookId=2;
   useEffect(() => {
     document.body.className = isDarkMode ? "dark-mode" : "light-mode";
   }, [isDarkMode]);
 
-  // Toggle fullscreen mode
+  useEffect(() => {
+    const fetchBook = async () => {
+      try {
+        console.log(userId,bookId);
+        const response = await axios.get(`http://localhost:5000/bookc/${bookId}`);
+        setBook(response.data);
+       
+      } catch (error) {
+        console.error("Error fetching book content:", error);
+      }
+    };
+
+    fetchBook();
+  }, [bookId]);
+
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
       bookContainerRef.current.requestFullscreen().catch(err => {
@@ -24,57 +43,80 @@ const navigate = useNavigate();
     }
   };
 
+  if (!book) {
+    return <div>Loading book content...</div>;
+  }
+
+  // 🧠 Split abstract into words
+  const words = book.abstract.split(" ");
+  const totalPages = Math.ceil(words.length / wordsPerPage);
+
+  const getCurrentPageText = () => {
+    const start = currentPage * wordsPerPage;
+    const end = start + wordsPerPage;
+    return words.slice(start, end).join(" ");
+  };
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const goToPrevPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
   return (
-    <div className={`book-viewer ${isDarkMode ? "dark-mode" : "light-mode"}`} ref={bookContainerRef}>
-      {/* Fixed Header Buttons */}
-      <div className="top-bar">
-        <Button variant="secondary" className="back-btn" onClick={() => navigate("/profile")}>← Back</Button>
-        <div className="right-buttons">
-          <Button variant="secondary" onClick={() => setFontSize(fontSize + 2)}>➕</Button>
-          <Button variant="secondary" onClick={() => setFontSize(fontSize > 14 ? fontSize - 2 : 14)}>➖</Button>
-          <Button variant="secondary" onClick={toggleFullScreen}>⛶ Full Screen</Button>
-          <Button 
-            variant="secondary" 
-            onClick={() => setIsDarkMode(!isDarkMode)}
-          >
-            {isDarkMode ? "🌞 Light Mode" : "🌙 Dark Mode"}
-          </Button>
+    <div>
+      <Menum />
+  
+      {/* Added a wrapper div with margin */}
+      <div style={{ marginTop: "80px" }}>  
+        <div className={`book-viewer ${isDarkMode ? "dark-mode" : "light-mode"}`} ref={bookContainerRef}>
+          {/* Top Bar */}
+          <div className="top-bar">
+            <div className="right-buttons">
+              <Button variant="secondary" onClick={() => setFontSize(fontSize + 2)}>➕</Button>
+              <Button variant="secondary" onClick={() => setFontSize(fontSize > 14 ? fontSize - 2 : 14)}>➖</Button>
+              <Button variant="secondary" onClick={toggleFullScreen}>⛶ Full Screen</Button>
+              <Button variant="secondary" onClick={() => setIsDarkMode(!isDarkMode)}>
+                {isDarkMode ? "🌞 Light Mode" : "🌙 Dark Mode"}
+              </Button>
+            </div>
+          </div>
+  
+          {/* Book Content */}
+          <div className="book-container">
+            <Container className="book-content">
+              <h1 className="book-title">{book.bookId}</h1>
+              
+              <Row>
+                <Col md={{ span: 8, offset: 2 }}>
+                  <p className="book-text" style={{ fontSize: `${fontSize}px` }}>
+                    {getCurrentPageText()}
+                  </p>
+  
+                  {/* Pagination */}
+                  <div className="pagination-controls">
+                    <Button variant="secondary" onClick={goToPrevPage} disabled={currentPage === 0}>
+                      ⬅️ Previous
+                    </Button>
+                    <span>Page {currentPage + 1} of {totalPages}</span>
+                    <Button variant="secondary" onClick={goToNextPage} disabled={currentPage === totalPages - 1}>
+                      Next ➡️
+                    </Button>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </div>
         </div>
-      </div>
-
-      {/* Scrollable Book Content */}
-      <div className="book-container">
-        <Container className="book-content">
-          <h1 className="book-title">The Lost Kingdom</h1>
-          <img src={bookCover} alt="Book Cover" className="book-cover" />
-          
-          <Row>
-            <Col md={{ span: 8, offset: 2 }}>
-              <p className="book-text" style={{ fontSize: `${fontSize}px` }}>
-                The sun was setting beyond the ancient ruins of Eldoria, painting the sky in hues of orange and purple. 
-                A lone traveler, cloaked in a deep blue robe, approached the forgotten gates. The wind howled through 
-                the empty archways, whispering secrets of the past. Every step he took echoed against the stone walls, 
-                as if the ghosts of history were watching.
-              </p>
-
-              <p className="book-text" style={{ fontSize: `${fontSize}px` }}>
-                Deep inside the ruined city, the traveler uncovered a hidden chamber beneath the palace. The air was thick 
-                with dust and mystery. On the walls, inscriptions in an ancient language hinted at a forgotten power. He 
-                traced his fingers over the carvings, feeling a strange warmth beneath them. A moment later, a golden light 
-                illuminated the room, revealing a hidden door.
-              </p>
-
-              <p className="book-text" style={{ fontSize: `${fontSize}px` }}>
-                As he stepped through, a magnificent sight unfolded before him. A vast underground city lay hidden beneath 
-                the ruins, untouched by time. Towers of crystal and silver stretched toward the ceiling, glowing softly. 
-                The traveler knew he had uncovered something extraordinary—an entire civilization lost to history.
-              </p>
-            </Col>
-          </Row>
-        </Container>
       </div>
     </div>
   );
+  
 };
 
 export default BookViewer;

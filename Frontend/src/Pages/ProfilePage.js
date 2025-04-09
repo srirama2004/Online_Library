@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation  } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Nav, Card } from 'react-bootstrap';
+ import CheckInPage from "./CheckInPage";
 import { BsPerson } from 'react-icons/bs';
 import pic from "../images/pic1.jpg";
 import gatsby from "../images/greatGatsby.png";
@@ -21,10 +22,6 @@ import verity from '../images/verity.png'
 import lessonsInChemistry from '../images/lessons.png'
 import hailMary from '../images/hailmary.png'
 import axios from 'axios';
-import Carousel from 'react-bootstrap/Carousel';
-
-
-
 const ProfilePage = () => {
     const [activeTab, setActiveTab] = useState('reads');
     const [hoveredTab, setHoveredTab] = useState(null);
@@ -354,45 +351,9 @@ const ProfilePage = () => {
                     <span className="visually-hidden">Next</span>
                 </button>
             </div>
+          
         </div>
     );
-    // const wishListContent = (
-    //     <div>
-    //         <h3 className="text-center mb-4 text-white">Go read</h3>
-    //         <div id="wishListCarousel" className="carousel slide" data-bs-ride="carousel">
-    //             <div className="carousel-inner" style={styles.carouselInner}>
-    //                 {Array.from({ length: Math.ceil(wishListBooks.length / 5) }, (_, i) => (
-    //                     <div key={i} className={`carousel-item ${i === 0 ? 'active' : ''}`} style={styles.carouselItem}>
-    //                         <div className="d-flex justify-content-center">
-    //                             {wishListBooks.slice(i * 5, (i + 1) * 5).map(book => (
-    //                                 <div key={book.id} style={styles.bookCard}>
-    //                                     <img
-    //                                         src={book.image}
-    //                                         alt={book.title}
-    //                                         style={styles.bookImage}
-    //                                     />
-    //                                     <div style={styles.bookCardContent}>
-    //                                         <h5 className="fs-6 text-center">{book.title}</h5>
-    //                                         <p className="text-center text-muted small">{book.author}</p>
-    //                                     </div>
-    //                                 </div>
-    //                             ))}
-    //                         </div>
-    //                     </div>
-    //                 ))}
-    //             </div>
-    //             <button className="carousel-control-prev" type="button" data-bs-target="#wishListCarousel" data-bs-slide="prev" style={styles.carouselControl}>
-    //                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-    //                 <span className="visually-hidden">Previous</span>
-    //             </button>
-    //             <button className="carousel-control-next" type="button" data-bs-target="#wishListCarousel" data-bs-slide="next" style={styles.carouselControl}>
-    //                 <span className="carousel-control-next-icon" aria-hidden="true"></span>
-    //                 <span className="visually-hidden">Next</span>
-    //             </button>
-    //         </div>
-    //     </div>
-    // );
-
     const wishListContent = wishlistBooks.length > 0 ? (
         <div>
             <h3 className="text-center mb-4 text-white">Your Wishlist</h3>
