@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const Review = require("../models/reviews"); // Import Model
-const Book = require("../models/bookdescription"); // Import Model
+const Review = require("../models/reviews"); 
+const Book = require("../models/bookdescription"); 
 
 
 router.get("/get/:bookId", async (req, res) => {
@@ -25,11 +25,11 @@ router.get("/get/:bookId", async (req, res) => {
     try {
       const { id, username, rating, text } = req.body;
       bookId = id;
-      // Save the new review
+      
       const newReview = new Review({ bookId , username, rating, text });
       await newReview.save();
   
-      // Fetch all reviews for this book
+      
       const allReviews = await Review.find({ bookId });
   
       res.status(201).json(allReviews);

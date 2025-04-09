@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const Book = require("../models/bookdescription"); // Import Model
-const Order = require('../models/orders'); // adjust path as needed
+const Book = require("../models/bookdescription"); 
+const Order = require('../models/orders'); 
 
-// ➤ Add a new book
+
 router.post("/add", async (req, res) => {
   try {
     console.log("inside add");
@@ -22,23 +22,23 @@ router.post("/add", async (req, res) => {
   }
 });
 
-// ➤ Get all books
+
 router.get("/all", async (req, res) => {
   try {
     console.log("inside all");
-    const books = await Book.find();  // Fetch all books
+    const books = await Book.find();  
     res.json(books);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch books", details: error.message });
   }
 });
-// GET books by category
+
 router.get("/:category", async (req, res) => {
   try {
     
     const category = req.params.category;
     console.log("inside category",category);
-    const books = await Book.find({ category }); // Fetch books based on category
+    const books = await Book.find({ category }); 
     console.log(books);
     res.json(books);
   } catch (err) {
@@ -55,7 +55,7 @@ router.get("/top6", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch top books", details: err.message });
   }
 });
-// 
+
 
 router.get("/get/:id", async (req, res) => {
   try {
@@ -80,11 +80,11 @@ router.get('/user-orders/:userId', async (req, res) => {
   console.log("Received request for purchased orders for userId:", userId);
 
   try {
-    // Find all orders for this user where payment is successful
+    
     const orders = await Order.find({ userId, status: 'paid' });
     console.log("Orders found:", orders);
 
-    // Extract bookIds from orders (convert to numbers if necessary)
+    
     const bookIds = orders.map(order => {
       const parsedId = parseInt(order.bookId);
       console.log(`Parsed bookId for order ${order._id}:`, parsedId);
@@ -92,7 +92,7 @@ router.get('/user-orders/:userId', async (req, res) => {
     });
     console.log("Extracted book IDs:", bookIds);
 
-    // Retrieve book details for these bookIds
+    
     const books = await Book.find({ bookId: { $in: bookIds } });
     console.log("Fetched books corresponding to orders:", books);
 

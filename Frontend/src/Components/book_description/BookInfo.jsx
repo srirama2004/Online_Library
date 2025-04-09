@@ -8,7 +8,7 @@ import ReadNowButton from "./ReadNowButton";
 
 const BookReview = () => {
 
-  // const userId = "123"; // Replace this with actual logged-in user ID
+  
   const userId = localStorage.getItem("userId");
 
 
@@ -20,7 +20,7 @@ const BookReview = () => {
   const [loading, setLoading] = useState(true);
 
 
-  const [ownsBook, setOwnsBook] = useState(false); // ✅ Check ownership
+  const [ownsBook, setOwnsBook] = useState(false); 
   
 
   useEffect(() => {
@@ -62,14 +62,7 @@ const BookReview = () => {
     fetchReviews();
   }, [id]);
 
-  const handleButtonClick = () => {
-    if (book?.price === 0 || ownsBook) {
-      navigate(`/bookviewer/${userId}/${id}`); // ✅ Allow read
-    } else {
-      console.log("Proceeding to purchase for", book?.price);
-      // open Razorpay flow or go to checkout
-    }
-  };
+  
 
   if (loading) return <p>Loading...</p>;
   if (!book) return <p>Book not found</p>;
@@ -113,7 +106,7 @@ const BookReview = () => {
               < ReadNowButton userId={userId} bookId={id} /> 
             ) : (
               <RazorpayButton amount={book.price} bookId={id} user={{
-                id: userId}} onSuccess={handleButtonClick} ></RazorpayButton>
+                id: userId}}  ></RazorpayButton>
             )}
          
         </div>

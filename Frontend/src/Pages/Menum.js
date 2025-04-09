@@ -23,7 +23,7 @@ function Menum({ searchQuery, setSearchQuery }) {
   };
 
   const handleProfileClick = () => {
-    navigate('/profile'); // Navigate to profile page
+    navigate('/profile'); 
   };
 
   return (

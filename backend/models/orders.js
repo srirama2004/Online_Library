@@ -2,19 +2,19 @@ const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
     userId: {
-        type: String, // changed from ObjectId
+        type: String, 
         required: true,
       },
       bookId: {
-        type: String, // changed from ObjectId
+        type: String, 
         required: true,
       },
 
   razorpayOrderId: { type: String, required: true },
-  razorpayPaymentId: { type: String }, // filled after successful payment
-  razorpaySignature: { type: String }, // for verification
+  razorpayPaymentId: { type: String }, 
+  razorpaySignature: { type: String }, 
 
-  amount: { type: Number, required: true }, // in paise
+  amount: { type: Number, required: true }, 
   currency: { type: String, default: 'INR' },
   status: { type: String, enum: ['created', 'paid', 'failed'], default: 'created' },
 

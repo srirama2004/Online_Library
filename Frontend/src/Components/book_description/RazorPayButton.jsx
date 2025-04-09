@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const RazorpayButton = ({ amount, user, bookId, onSuccess }) => {
+const RazorpayButton = ({ amount, user, bookId }) => {
   const [loading, setLoading] = useState(false);
 
   const loadScript = (src) => {
@@ -23,7 +23,7 @@ const RazorpayButton = ({ amount, user, bookId, onSuccess }) => {
       return;
     }
 
-    // 👇 Include userId and bookId in body to match backend
+    
     const result = await fetch("http://localhost:5000/rzpay/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -62,16 +62,16 @@ const RazorpayButton = ({ amount, user, bookId, onSuccess }) => {
         const verifyData = await verifyRes.json();
 
         if (verifyData.message === "Payment successful") {
-       //   onSuccess?.(); // Trigger onSuccess callback
-       alert(" Payment verification suc.");
+       
+       window.location.reload();
         } else {
           alert("❌ Payment verification failed.");
         }
       },
       prefill: {
-        // name: user?.name || "Guest",
-        // email: user?.email || "guest@example.com",
-        // contact: user?.contact || "9999999999",
+        
+        
+        
       },
       notes: {
         address: "India",

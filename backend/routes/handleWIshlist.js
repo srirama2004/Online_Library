@@ -1,9 +1,9 @@
 const express = require("express");
 const Wishlist = require("../models/wishlist");
-const Book = require("../models/bookdescription"); // Import the Book model
+const Book = require("../models/bookdescription"); 
 const router = express.Router();
 
-// Add or Remove Book from Wishlist (Toggle)
+
 router.post("/toggle", async (req, res) => {
   const { userId, bookId } = req.body;
 
@@ -24,7 +24,7 @@ router.post("/toggle", async (req, res) => {
   }
 });
 
-// Check if a book is wished
+
 router.get("/check/:userId/:bookId", async (req, res) => {
   const { userId, bookId } = req.params;
   try {
@@ -39,15 +39,15 @@ router.get("/all/:userId", async (req, res) => {
   const { userId } = req.params;
   console.log("Fetching wishlist for userId:", userId);
   try {
-    // Find wishlist items for this user
+    
     const wishlistItems = await Wishlist.find({ userId });
     console.log("Wishlist items:", wishlistItems);
 
-    // Extract bookIds (convert to numbers if needed)
+    
     const bookIds = wishlistItems.map(item => parseInt(item.bookId));
     console.log("Extracted book IDs:", bookIds);
 
-    // Retrieve book details for these bookIds
+    
     const books = await Book.find({ bookId: { $in: bookIds } });
     console.log("Fetched wishlist books:", books);
 

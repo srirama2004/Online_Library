@@ -11,7 +11,7 @@ const SignIn = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [message, setMessage] = useState(''); // ✅ Add this line
+    const [message, setMessage] = useState(''); 
     const navigate = useNavigate();
 
     const togglePasswordVisibility = () => {
@@ -37,13 +37,13 @@ const SignIn = () => {
             const data = await response.json();
             setMessage(data.message);
             if (response.ok) {
-                // Save the userId returned from the backend
+                
                 localStorage.setItem('userId', data.userId);
                 localStorage.setItem('userEmail', username);
 
-                // Navigate to the profile page (or home) after a successful sign-in
+                
                 navigate('/');
-                // navigate('/profile', { state: { userId: data.userId } });
+                
             }
         } catch (error) {
             console.error('Error during sign in:', error);
@@ -53,7 +53,7 @@ const SignIn = () => {
 
     const styles = {
         pageBackground: {
-            backgroundColor: '#A67B5B', // Beige background
+            backgroundColor: '#A67B5B', 
             minHeight: '100vh',
             width: '100%',
             display: 'flex',
@@ -93,7 +93,7 @@ const SignIn = () => {
             left: '0',
             width: '100%',
             height: '100%',
-            background: 'rgba(0,0,0,0.3)', // Subtle dark overlay
+            background: 'rgba(0,0,0,0.3)', 
             zIndex: '1',
         },
         imageText: {
@@ -116,7 +116,7 @@ const SignIn = () => {
             fontWeight: '300',
         },
         formTitle: {
-            color: '#5D1E14', // Dark brown
+            color: '#5D1E14', 
             fontSize: '2rem',
             fontWeight: 'bold',
             marginBottom: '0.5rem',
@@ -143,7 +143,7 @@ const SignIn = () => {
             marginBottom: '2rem',
         },
         forgotPasswordLink: {
-            color: '#8B1E3F', // Maroon
+            color: '#8B1E3F', 
             textDecoration: 'none',
         },
         signinButton: {
@@ -229,7 +229,7 @@ const SignIn = () => {
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                             className="border-end-0"
-                                            style={{ height: "40px" }} // Ensure uniform height
+                                            style={{ height: "40px" }} 
                                         />
                                         <InputGroup.Text
                                             className="bg-white border-start-0 d-flex align-items-center p-0"

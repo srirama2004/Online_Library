@@ -13,7 +13,7 @@ function Home() {
   const [booksByCategory, setBooksByCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("General");
   const [searchQuery, setSearchQuery] = useState("");
-  const [userEmail] = useState(null); // 🛠️ Add userEmail state
+  const [userEmail] = useState(null); 
   const checkInAndUpdateStreak = useCallback(async (email) => {
     try {
       const today = new Date().toISOString().split('T')[0]; 
@@ -31,7 +31,7 @@ function Home() {
     } catch (error) {
       console.error('Error during check-in:', error);
     }
-  }, []); // no dependencies inside, so []
+  }, []); 
 
   useEffect(() => {
     const email = localStorage.getItem('userEmail');
@@ -39,7 +39,7 @@ function Home() {
       checkInAndUpdateStreak(email); 
     }
   }, [checkInAndUpdateStreak]);
-  // Fetch books (popular books)
+  
   useEffect(() => {
     fetch("http://localhost:5000/books/all")
       .then((res) => res.json())
@@ -47,7 +47,7 @@ function Home() {
       .catch((err) => console.error("Error fetching top books:", err));
   }, []);
 
-  // Fetch books by category
+  
   useEffect(() => {
     fetch(`http://localhost:5000/books/${selectedCategory}`)
       .then((res) => res.json())
@@ -55,7 +55,7 @@ function Home() {
       .catch((err) => console.error(`Error fetching books for ${selectedCategory}:`, err));
   }, [selectedCategory]);
 
-  // Handle search
+  
   const filteredBooks = searchQuery
     ? books.filter(
         (book) =>
@@ -64,7 +64,7 @@ function Home() {
       )
     : booksByCategory;
 
-  // Handle clicking a book
+  
   const handleBookClick = (bookId) => {
     const email = localStorage.getItem('userEmail');
     if (email) {
@@ -120,7 +120,7 @@ function Home() {
                       className="mx-2"
                       onClick={() => {
                         setSelectedCategory(category);
-                        setSearchQuery(""); // Clear search when category changes
+                        setSearchQuery(""); 
                       }}
                     >
                       {category}

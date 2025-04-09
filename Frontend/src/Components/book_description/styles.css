@@ -34,6 +34,7 @@
   display: flex;
   flex-direction: row;
   gap: 2em;
+  margin-top: 2%;
   width: 100%;
   color: white;
 }
@@ -120,7 +121,7 @@
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   padding: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+ 
 }
 
 .review-header {
@@ -128,9 +129,7 @@
   justify-content: space-between;
 }
 
-.reviewer-info {
-  width: 100%;
-}
+
 
 .user-rating-line {
   display: flex;
@@ -198,7 +197,7 @@
   background: rgb(0, 0, 0);
   border-radius: 12px;
   padding: 16px;
-  width: 60vw;
+  width: 40vw;
   margin-bottom: 16px;
 }
 
@@ -238,5 +237,10 @@
 .star.filled {
   color: gold;
 }
+
+.book_wishlist{
+  margin-top: 0px;
+}
+
 
 /* Add this to your styles.css */
