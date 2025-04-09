@@ -19,7 +19,7 @@ function App() {
           <Route path="/book/:id" element={<BookDescription />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/bookviewer" element={<BookViewer />} />
+          <Route path="/bookviewer/:bookId" element={<BookViewer />} />
           <Route path="/checkin" element={<CheckInPage />} />
           <Route path="/google-auth-success" element={<GoogleAuthSuccess />} />
         </Routes>

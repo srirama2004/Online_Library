@@ -36,7 +36,7 @@ const ProfilePage = () => {
     const location = useLocation();
     
 
-    // Retrieve userId and userEmail from localStorage
+    
     useEffect(() => {
         const storedUserId = localStorage.getItem('userId');
         console.log("Retrieved userId from localStorage:", storedUserId);
@@ -46,7 +46,7 @@ const ProfilePage = () => {
         setUserEmail(storedUserEmail);
     }, []);
 
-    // Fetch purchased books using the current userId
+    
     useEffect(() => {
         if (userId) {
             console.log("Fetching purchased books for userId:", userId);
@@ -65,7 +65,7 @@ const ProfilePage = () => {
         setActiveTab(tab);
     };
 
-    // NEW: Fetch wishlist books dynamically
+    
     useEffect(() => {
         if (userId) {
             console.log("Fetching wishlist for userId:", userId);
@@ -80,7 +80,7 @@ const ProfilePage = () => {
         }
     }, [userId]);
 
-    // NEW: Fetch currentReads books dynamically
+    
     useEffect(() => {
         if (userId) {
           console.log("Fetching current reads for userId:", userId);
@@ -96,23 +96,23 @@ const ProfilePage = () => {
       }, [userId]);
       
 
-    // Initialize Bootstrap carousel after component fully renders
+    
     useEffect(() => {
-        // We need to load Bootstrap's JS here
+        
         const loadBootstrapScript = () => {
             const script = document.createElement('script');
             script.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js';
             script.integrity = 'sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz';
             script.crossOrigin = 'anonymous';
             script.onload = () => {
-                // Initialize the carousel once Bootstrap is loaded
+                
                 if (typeof window !== 'undefined' && window.bootstrap) {
                     const carouselElement = document.getElementById('booksCarousel');
                     if (carouselElement) {
                         new window.bootstrap.Carousel(carouselElement, {
-                            interval: 5000, // Auto-slide every 5 seconds
-                            wrap: true,    // Loop back to beginning
-                            touch: true     // Enable touch swipe
+                            interval: 5000, 
+                            wrap: true,    
+                            touch: true     
                         });
                     }
                 }
@@ -122,7 +122,7 @@ const ProfilePage = () => {
 
         loadBootstrapScript();
 
-        // Cleanup function to remove the script when component unmounts
+        
         return () => {
             const bootstrapScript = document.querySelector('script[src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"]');
             if (bootstrapScript) {
@@ -131,7 +131,7 @@ const ProfilePage = () => {
         };
     }, [activeTab]);
 
-    // Sample book data for the currently reading list
+    
     const currentlyReadingBooks = [
         { id: 1, title: "The Great Gatsby", author: "F. Scott Fitzgerald", progress: 45, image: gatsby },
         { id: 2, title: "To Kill a Mockingbird", author: "Harper Lee", progress: 68, image: bird },
@@ -155,12 +155,12 @@ const ProfilePage = () => {
 
 
 
-    // Styles for the profile page
+    
     const styles = {
         pageContainer: {
             width: '100%',
             minHeight: '100vh',
-            backgroundColor: '#1e160f', // Light brown background
+            backgroundColor: '#1e160f', 
             padding: '0',
         },
         headerSection: {
@@ -173,14 +173,14 @@ const ProfilePage = () => {
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            objectPosition: '50% 20%', // Adjusts the focus 20% from the top
+            objectPosition: '50% 20%', 
         },
 
         bookImage: {
-            width: '100%',  // Fill the card width
-            height: '280px', // Taller height for book images
+            width: '100%',  
+            height: '280px', 
             objectFit: 'cover',
-            borderRadius: '5px 5px 0 0', // Rounded corners only on top
+            borderRadius: '5px 5px 0 0', 
         },
         fullHeightImage: {
             width: "100%",
@@ -213,12 +213,12 @@ const ProfilePage = () => {
             margin: '0 auto 100px',
         },
         navContainer: {
-            backgroundColor: '#382e25', // Dark brown
+            backgroundColor: '#382e25', 
             width: '100%',
             padding: '10px 0',
-            position: 'sticky', // Makes it sticky
-            top: 0, // Sticks to the top of the viewport
-            zIndex: 100, // Ensures it stays above other elements
+            position: 'sticky', 
+            top: 0, 
+            zIndex: 100, 
         },
         navTabs: {
             display: 'flex',
@@ -281,7 +281,7 @@ const ProfilePage = () => {
             borderRadius: '10px',
             backgroundColor: 'white',
             boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-            overflow: 'hidden', // To ensure border-radius works with image
+            overflow: 'hidden', 
             height: '100%',
             width: '200px',
             margin: '0 10px',
@@ -298,7 +298,7 @@ const ProfilePage = () => {
         bookCardContent: {
             padding: '15px',
         },
-        // Fix the carousel control buttons
+        
         carouselControl: {
             width: '5%',
             background: 'rgba(93, 64, 55, 0.3)',
@@ -312,7 +312,7 @@ const ProfilePage = () => {
         }
     };
 
-    // Create the new carousel for the reads tab matching your screenshot layout
+    
     const newReadsContent = (
         <div>
             <h3 className="text-center mb-4 text-white">Currently Reading</h3>
@@ -534,43 +534,43 @@ const ProfilePage = () => {
     );
 
 
-    // Content components for each tab
-    // const tabContents = {
-    //     reads: newReadsContent,
-    //     wishlist: wishListContent,
-    //     completed: wishListContent,
-    //     notifications: notifications.length > 0 ? (
-    //         <div className="p-5">
-    //             <h4 className="text-white mb-3">Purchased Books</h4>
-    //             <Carousel interval={3000}>
-    //                 {notifications.map((book, index) => (
-    //                     <Carousel.Item key={index}>
-    //                         <div className="d-flex justify-content-center">
-    //                             <div className="card" style={{ width: '18rem' }}>
-    //                                 <img
-    //                                     src={book.image}
-    //                                     className="card-img-top"
-    //                                     alt={book.title}
-    //                                 />
-    //                                 <div className="card-body">
-    //                                     <h5 className="card-title">{book.title}</h5>
-    //                                     <p className="card-text">{book.abstract}</p>
-    //                                 </div>
-    //                             </div>
-    //                         </div>
-    //                     </Carousel.Item>
-    //                 ))}
-    //             </Carousel>
-    //         </div>
-    //     ) : (
-    //         <div className="text-center p-5 text-white">No books purchased yet.</div>
-    //     )
-    // };
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     const tabContents = {
-        reads: currentReadsContent, // Updated to use the new carousel
+        reads: currentReadsContent, 
         wishlist: wishListContent,
-        completed: wishListContent, // example - you can change accordingly
-        notifications: purchasedContent, // Purchased books tab now shows a grid layout
+        completed: wishListContent, 
+        notifications: purchasedContent, 
     };
 
 

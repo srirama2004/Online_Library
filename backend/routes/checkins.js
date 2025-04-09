@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const CheckIn = require("../models/Checkin.js");
 
-// POST - User checks in
+
 router.post('/', async (req, res) => {
-  const { email, date } = req.body;   // changed userId -> email
+  const { email, date } = req.body;   
   try {
     const alreadyCheckedIn = await CheckIn.findOne({ email, date });
     if (alreadyCheckedIn) {
@@ -19,8 +19,8 @@ router.post('/', async (req, res) => {
   }
 });
 
-// GET - Fetch all check-ins for a user
-router.get('/:email', async (req, res) => {   // changed userId -> email
+
+router.get('/:email', async (req, res) => {   
   const { email } = req.params;
   try {
     console.log(email + " checkin inside ");

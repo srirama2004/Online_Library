@@ -13,7 +13,7 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState(''); // ✅ Add this line
+  const [message, setMessage] = useState(''); 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -35,9 +35,9 @@ const Signup = () => {
       const data = await response.json();
       setMessage(data.message);
       if (response.ok) {
-        // Store the generated user ID in localStorage for later use
+        
         localStorage.setItem('userId', data.userId);
-        // Optionally, redirect to the SignIn page after successful signup
+        
         navigate('/signin');
       }
     } catch (error) {
@@ -53,7 +53,7 @@ const Signup = () => {
 
   const styles = {
     pageBackground: {
-      backgroundColor: '#A67B5B', // Beige background
+      backgroundColor: '#A67B5B', 
       minHeight: '100vh',
       width: '100%',
       display: 'flex',
@@ -93,7 +93,7 @@ const Signup = () => {
       left: '0',
       width: '100%',
       height: '100%',
-      background: 'rgba(0,0,0,0.3)', // Subtle dark overlay
+      background: 'rgba(0,0,0,0.3)', 
       zIndex: '1',
     },
     imageText: {
@@ -116,7 +116,7 @@ const Signup = () => {
       fontWeight: '300',
     },
     formTitle: {
-      color: '#5D1E14', // Dark brown
+      color: '#5D1E14', 
       fontSize: '2rem',
       fontWeight: 'bold',
       marginBottom: '0.5rem',
@@ -143,11 +143,11 @@ const Signup = () => {
       marginBottom: '2rem',
     },
     forgotPasswordLink: {
-      color: '#8B1E3F', // Maroon
+      color: '#8B1E3F', 
       textDecoration: 'none',
     },
     signinButton: {
-      backgroundColor: '#8B1E3F', // Maroon
+      backgroundColor: '#8B1E3F', 
       borderColor: '#8B1E3F',
       borderRadius: '8px',
       padding: '0.75rem',
@@ -229,7 +229,7 @@ const Signup = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="border-end-0"
-                      style={{ height: "40px" }} // Ensure uniform height
+                      style={{ height: "40px" }} 
                     />
                     <InputGroup.Text
                       className="bg-white border-start-0 d-flex align-items-center p-0"

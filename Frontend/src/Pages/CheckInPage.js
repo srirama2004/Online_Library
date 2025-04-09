@@ -5,10 +5,10 @@ import "./CheckInPage.css";
 
 const CheckInPage = () => {
   const [checkIns, setCheckIns] = useState({});
-  const [email, setEmail] = useState("");  // email instead of userId
+  const [email, setEmail] = useState("");  
 
   useEffect(() => {
-    // Normally you would get email from auth login
+    
     const loggedInEmail = localStorage.getItem('userEmail');
     if (loggedInEmail) {
     setEmail(loggedInEmail);

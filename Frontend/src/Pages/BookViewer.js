@@ -1,19 +1,24 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom"; 
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "./BookViewer.css";
 import Menum from "./Menum";
+import ReviewForm from "../Components/book_read/ReviewForm";
+
 const BookViewer = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [fontSize, setFontSize] = useState(18);
   const [book, setBook] = useState(null);
-  const [currentPage, setCurrentPage] = useState(0); // 📄 track which page
+  const [ownsBook, setOwnsBook] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
   const bookContainerRef = useRef(null);
   const navigate = useNavigate();
- const { userId, bookId1 } = useParams();
-  const wordsPerPage = 100; // 📄 words you want per "page"
-const bookId=2;
+  const { bookId } = useParams();
+  const userId = localStorage.getItem('userId'); 
+
+  const wordsPerPage = 100;
+
   useEffect(() => {
     document.body.className = isDarkMode ? "dark-mode" : "light-mode";
   }, [isDarkMode]);
@@ -21,17 +26,31 @@ const bookId=2;
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        console.log(userId,bookId);
         const response = await axios.get(`http://localhost:5000/bookc/${bookId}`);
         setBook(response.data);
-       
       } catch (error) {
         console.error("Error fetching book content:", error);
       }
     };
-
+  
+    const checkOwnership = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/rzpay/check/${userId}/${bookId}`);
+        const data = await res.json();
+  
+        if (!data.owns) {
+          navigate(`/book/${bookId}`); 
+        } else {
+          setOwnsBook(true);
+        }
+      } catch (err) {
+        console.error("Error checking ownership:", err);
+      }
+    };
+  
+    checkOwnership();
     fetchBook();
-  }, [bookId]);
+  }, [bookId, userId, navigate]);
 
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
@@ -47,7 +66,6 @@ const bookId=2;
     return <div>Loading book content...</div>;
   }
 
-  // 🧠 Split abstract into words
   const words = book.abstract.split(" ");
   const totalPages = Math.ceil(words.length / wordsPerPage);
 
@@ -68,14 +86,12 @@ const bookId=2;
       setCurrentPage(currentPage - 1);
     }
   };
+
   return (
     <div>
       <Menum />
-  
-      {/* Added a wrapper div with margin */}
-      <div style={{ marginTop: "80px" }}>  
+      <div style={{ marginTop: "80px" }}>
         <div className={`book-viewer ${isDarkMode ? "dark-mode" : "light-mode"}`} ref={bookContainerRef}>
-          {/* Top Bar */}
           <div className="top-bar">
             <div className="right-buttons">
               <Button variant="secondary" onClick={() => setFontSize(fontSize + 2)}>➕</Button>
@@ -86,19 +102,15 @@ const bookId=2;
               </Button>
             </div>
           </div>
-  
-          {/* Book Content */}
+
           <div className="book-container">
             <Container className="book-content">
-              <h1 className="book-title">{book.bookId}</h1>
-              
               <Row>
                 <Col md={{ span: 8, offset: 2 }}>
                   <p className="book-text" style={{ fontSize: `${fontSize}px` }}>
                     {getCurrentPageText()}
                   </p>
-  
-                  {/* Pagination */}
+
                   <div className="pagination-controls">
                     <Button variant="secondary" onClick={goToPrevPage} disabled={currentPage === 0}>
                       ⬅️ Previous
@@ -108,6 +120,11 @@ const bookId=2;
                       Next ➡️
                     </Button>
                   </div>
+
+                  {/* ✅ Only show if user owns book AND is on last page */}
+                  { currentPage === totalPages - 1 && (
+                    <ReviewForm bookid={bookId} />
+                  )}
                 </Col>
               </Row>
             </Container>
@@ -116,7 +133,6 @@ const bookId=2;
       </div>
     </div>
   );
-  
 };
 
 export default BookViewer;

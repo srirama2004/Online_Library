@@ -5,19 +5,19 @@ const ReadNowButton = ({ userId, bookId }) => {
   const [reading, setReading] = useState(false);
   const navigate = useNavigate();
 
-  // Check if the book is already in the current reading list
+  
   const checkCurrentRead = async () => {
     try {
       const res = await fetch(`http://localhost:5000/currentread/check/${userId}/${bookId}`);
       const data = await res.json();
-      // The GET endpoint returns { read: true/false }
+      
       setReading(data.read);
     } catch (err) {
       console.error("Failed to check current read status:", err);
     }
   };
 
-  // Toggle the current reading status (add if not present)
+  
   const startOrContinueReading = async () => {
     try {
       const res = await fetch(`http://localhost:5000/currentread/toggle`, {
@@ -26,9 +26,9 @@ const ReadNowButton = ({ userId, bookId }) => {
         body: JSON.stringify({ userId, bookId }),
       });
       const data = await res.json();
-      // The POST endpoint returns { reading: true } when successful
+      
       setReading(data.reading);
-      navigate("/bookviewer");
+      navigate(`/bookviewer/${bookId}`);
     } catch (err) {
       console.error("Failed to start/continue reading:", err);
     }

@@ -12,11 +12,11 @@ const GoogleAuthSuccess = () => {
     const userEmail=params.get('userEmail');
 
     if (token && userId) {
-      // Store token and userId in localStorage
+      
       localStorage.setItem('token', token);
       localStorage.setItem('userId', userId);
-      localStorage.setItem('userEmail', userEmail); // Store user email if needed
-      // Redirect to profile page
+      localStorage.setItem('userEmail', userEmail); 
+      
       navigate('/profile');
     } else {
       navigate('/signin');
