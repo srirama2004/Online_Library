@@ -42,7 +42,7 @@ const SignIn = () => {
                 localStorage.setItem('userEmail', username);
 
                 // Navigate to the profile page (or home) after a successful sign-in
-                navigate('/profile');
+                navigate('/');
                 // navigate('/profile', { state: { userId: data.userId } });
             }
         } catch (error) {

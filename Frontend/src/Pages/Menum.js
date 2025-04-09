@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Button, Nav } from "react-bootstrap";
-import "./Menu.css";
+import "./Menum.css";
 import bgImage from "../Components/libb1.jpg";
 import { useNavigate } from "react-router-dom"; 
 
-function Menu({ searchQuery, setSearchQuery }) {
+function Menum({ searchQuery, setSearchQuery }) {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState(null);
 
@@ -27,11 +27,11 @@ function Menu({ searchQuery, setSearchQuery }) {
   };
 
   return (
-    <div className="hero-section" style={{ backgroundImage: `url(${bgImage})` }}>
+    <div className="hero-section1" style={{ backgroundImage: `url(${bgImage})` }}>
       <div className="overlay">
         <Nav className="justify-content-end p-3">
           {userEmail ? (
-            <div className="d-flex align-items-center gap-3" style={{ marginTop: '30px' }}>
+            <div className="d-flex align-items-center gap-3" style={{ marginTop: '70px' }}>
               {/* Clickable Email */}
               <span
                 onClick={handleProfileClick}
@@ -55,22 +55,8 @@ function Menu({ searchQuery, setSearchQuery }) {
           )}
         </Nav>
       </div>
-
-      {/* Search Section */}
-      <div className="search-container">
-        <h1 className="library-heading">ONLINE LIBRARY</h1>
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <button className="btn">Search</button>
-        </div>
-      </div>
     </div>
   );
 }
 
-export default Menu;
+export default Menum;

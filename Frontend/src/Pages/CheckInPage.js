@@ -5,31 +5,27 @@ import "./CheckInPage.css";
 
 const CheckInPage = () => {
   const [checkIns, setCheckIns] = useState({});
-  const userId = "1"; // Replace with actual logged in user's ID
+  const [email, setEmail] = useState("");  // email instead of userId
 
   useEffect(() => {
-    fetchCheckIns();
+    // Normally you would get email from auth login
+    const loggedInEmail = localStorage.getItem('userEmail');
+    if (loggedInEmail) {
+    setEmail(loggedInEmail);
+    
+      fetchCheckIns(loggedInEmail);
+    }
   }, []);
 
-  const fetchCheckIns = async () => {
+  const fetchCheckIns = async (userEmail) => {
     try {
-      const res = await axios.get(`http://localhost:5000/checkins/1`);
+      
+      const res = await axios.get(`http://localhost:5000/checkins/${userEmail}`);
       setCheckIns(res.data);
     } catch (error) {
       console.error("Error fetching check-ins:", error);
     }
   };
-
-  const handleCheckIn = async () => {
-    const today = new Date().toISOString().split("T")[0];
-    try {
-      await axios.post(`http://localhost:5000/checkins`, { userId, date: today });
-      fetchCheckIns(); // Refresh after checking in
-    } catch (error) {
-      console.error("Error checking in:", error);
-    }
-  };
-
   const calculateStreak = () => {
     let streak = 0;
     let date = new Date();
@@ -61,7 +57,6 @@ const CheckInPage = () => {
   return (
     <div className="check-in-page">
       <h1>📅 Daily Check-In</h1>
-      <Button className="bb1"onClick={handleCheckIn}>Check In Today</Button>
       <p>🔥 Current Streak: {calculateStreak()} days</p>
       <div className="calendar-container">
         {calendarDays}
