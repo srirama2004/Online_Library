@@ -59,16 +59,9 @@ router.get('/google/callback',
       { expiresIn: '1h' }
     );
 
-    
-    
     const userEmail = req.user.email;
-
-    
-    
-    
- 
     res.redirect(`http://localhost:3000/google-auth-success?token=${token}&userId=${req.user._id}&userEmail=${userEmail}`);
-    
+
   }
 );
 

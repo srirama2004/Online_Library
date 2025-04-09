@@ -5,6 +5,7 @@ import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import pic from "../images/pic1.png";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
+import { alignPropType } from 'react-bootstrap/esm/types';
 
 
 const SignIn = () => {
@@ -36,14 +37,11 @@ const SignIn = () => {
             });
             const data = await response.json();
             setMessage(data.message);
-            if (response.ok) {
 
+            if (response.ok) {
                 localStorage.setItem('userId', data.userId);
                 localStorage.setItem('userEmail', username);
-
-
                 navigate('/');
-
             }
         } catch (error) {
             console.error('Error during sign in:', error);
@@ -128,6 +126,8 @@ const SignIn = () => {
         inputLabel: {
             fontWeight: '500',
             marginBottom: '0.5rem',
+            textAlign: 'left', // <-- add this
+            display: 'block',
         },
         formControl: {
             borderRadius: '8px',
@@ -242,11 +242,7 @@ const SignIn = () => {
                                 </Form.Group>
 
 
-                                <Button
-                                    type="submit"
-                                    className="w-100"
-                                    style={styles.signinButton}
-                                >
+                                <Button type="submit" className="w-100" style={styles.signinButton}>
                                     SIGN IN
                                 </Button>
 
@@ -263,13 +259,9 @@ const SignIn = () => {
                                 </div>
 
                                 <div style={styles.socialButtonsContainer}>
-                                    {/* <Button variant="outline-secondary" style={styles.socialButton}>
-                                        <FcGoogle style={{ color: "#4285F4", marginRight: "8px" }} />
-                                        Google
-                                    </Button> */}
+
                                     <Button variant="outline-secondary" style={styles.socialButton}
-                                        href="http://localhost:5000/api/auth/google"
-                                    >
+                                        href="http://localhost:5000/api/auth/google">
                                         <FcGoogle style={{ color: "#4285F4", marginRight: "8px" }} />
                                         Google
                                     </Button>

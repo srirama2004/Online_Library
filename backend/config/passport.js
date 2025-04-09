@@ -19,7 +19,6 @@ passport.use(
           return done(null, user);
         }
         
-        
         const newUser = new User({
           email: profile.emails[0].value,
           password: 'google-auth-' + Math.random().toString(36).slice(-8) 

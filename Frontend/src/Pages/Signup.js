@@ -13,7 +13,7 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState(''); 
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -35,9 +35,9 @@ const Signup = () => {
       const data = await response.json();
       setMessage(data.message);
       if (response.ok) {
-        
+
         localStorage.setItem('userId', data.userId);
-        
+
         navigate('/signin');
       }
     } catch (error) {
@@ -53,7 +53,7 @@ const Signup = () => {
 
   const styles = {
     pageBackground: {
-      backgroundColor: '#A67B5B', 
+      backgroundColor: '#A67B5B',
       minHeight: '100vh',
       width: '100%',
       display: 'flex',
@@ -93,7 +93,7 @@ const Signup = () => {
       left: '0',
       width: '100%',
       height: '100%',
-      background: 'rgba(0,0,0,0.3)', 
+      background: 'rgba(0,0,0,0.3)',
       zIndex: '1',
     },
     imageText: {
@@ -116,7 +116,7 @@ const Signup = () => {
       fontWeight: '300',
     },
     formTitle: {
-      color: '#5D1E14', 
+      color: '#5D1E14',
       fontSize: '2rem',
       fontWeight: 'bold',
       marginBottom: '0.5rem',
@@ -128,6 +128,8 @@ const Signup = () => {
     inputLabel: {
       fontWeight: '500',
       marginBottom: '0.5rem',
+      textAlign: 'left', // <-- add this
+      display: 'block',
     },
     formControl: {
       borderRadius: '8px',
@@ -143,11 +145,11 @@ const Signup = () => {
       marginBottom: '2rem',
     },
     forgotPasswordLink: {
-      color: '#8B1E3F', 
+      color: '#8B1E3F',
       textDecoration: 'none',
     },
     signinButton: {
-      backgroundColor: '#57473a', 
+      backgroundColor: '#57473a',
       borderColor: '#8B1E3F',
       borderRadius: '8px',
       padding: '0.75rem',
@@ -229,7 +231,7 @@ const Signup = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="border-end-0"
-                      style={{ height: "40px" }} 
+                      style={{ height: "40px" }}
                     />
                     <InputGroup.Text
                       className="bg-white border-start-0 d-flex align-items-center p-0"
@@ -263,13 +265,8 @@ const Signup = () => {
                 </div>
 
                 <div style={styles.socialButtonsContainer}>
-                  {/* <Button variant="outline-secondary" style={styles.socialButton}>
-                    <FcGoogle style={{ color: "#4285F4", marginRight: "8px" }} />
-                    Google
-                  </Button> */}
-                  <Button  variant="outline-secondary" style={styles.socialButton}
-                    href="http://localhost:5000/api/auth/google"
-                  >
+                  <Button variant="outline-secondary" style={styles.socialButton}
+                    href="http://localhost:5000/api/auth/google" >
                     <FcGoogle style={{ color: "#4285F4", marginRight: "8px" }} />
                     Google
                   </Button>

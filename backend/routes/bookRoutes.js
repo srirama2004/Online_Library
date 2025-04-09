@@ -83,7 +83,6 @@ router.get('/user-orders/:userId', async (req, res) => {
     
     const orders = await Order.find({ userId, status: 'paid' });
     console.log("Orders found:", orders);
-
     
     const bookIds = orders.map(order => {
       const parsedId = parseInt(order.bookId);
@@ -92,7 +91,6 @@ router.get('/user-orders/:userId', async (req, res) => {
     });
     console.log("Extracted book IDs:", bookIds);
 
-    
     const books = await Book.find({ bookId: { $in: bookIds } });
     console.log("Fetched books corresponding to orders:", books);
 

@@ -5,23 +5,8 @@ import { Container, Row, Col, Nav, Card } from 'react-bootstrap';
  import CheckInPage from "./CheckInPage";
 import { BsPerson } from 'react-icons/bs';
 import pic from "../images/pic1.jpg";
-import gatsby from "../images/greatGatsby.png";
-import bird from "../images/killabird.png";
-import onenine from "../images/1984.png";
-import pride from "../images/pride.png";
-import hobbit from "../images/hobbit.png";
-import moby from "../images/moby.png";
-import lotr from "../images/lotr.png";
-import catcher from "../images/catcher.png";
-import brave from "../images/brave.png";
-import midnightLibrary from '../images/midnight.png'
-import endsWithUs from '../images/itends.png'
-import silentPatient from '../images/silent.png'
-import manCalledOve from '../images/ove.png'
-import verity from '../images/verity.png'
-import lessonsInChemistry from '../images/lessons.png'
-import hailMary from '../images/hailmary.png'
 import axios from 'axios';
+
 const ProfilePage = () => {
     const [activeTab, setActiveTab] = useState('reads');
     const [hoveredTab, setHoveredTab] = useState(null);
@@ -34,8 +19,6 @@ const ProfilePage = () => {
     const navigate = useNavigate();
 
     const location = useLocation();
-    
-
     
     useEffect(() => {
         const storedUserId = localStorage.getItem('userId');
@@ -130,32 +113,7 @@ const ProfilePage = () => {
             }
         };
     }, [activeTab]);
-
-    
-    const currentlyReadingBooks = [
-        { id: 1, title: "The Great Gatsby", author: "F. Scott Fitzgerald", progress: 45, image: gatsby },
-        { id: 2, title: "To Kill a Mockingbird", author: "Harper Lee", progress: 68, image: bird },
-        { id: 3, title: "1984", author: "George Orwell", progress: 23, image: onenine },
-        { id: 4, title: "Pride and Prejudice", author: "Jane Austen", progress: 89, image: pride },
-        { id: 5, title: "The Hobbit", author: "J.R.R. Tolkien", progress: 12, image: hobbit },
-        { id: 6, title: "Moby Dick", author: "Herman Melville", progress: 37, image: moby },
-        { id: 7, title: "The Catcher in the Rye", author: "J.D. Salinger", progress: 52, image: catcher },
-        { id: 8, title: "The Lord of the Rings", author: "J.R.R. Tolkien", progress: 74, image: lotr },
-        { id: 9, title: "Brave New World", author: "Aldous Huxley", progress: 41, image: brave },
-    ];
-    const wishListBooks = [
-        { id: 1, title: "The Midnight Library", author: "Matt Haig", progress: 0, image: midnightLibrary },
-        { id: 2, title: "It Ends with Us", author: "Colleen Hoover", progress: 0, image: endsWithUs },
-        { id: 3, title: "The Silent Patient", author: "Alex Michaelides", progress: 0, image: silentPatient },
-        { id: 4, title: "A Man Called Ove", author: "Fredrik Backman", progress: 0, image: manCalledOve },
-        { id: 5, title: "Verity", author: "Colleen Hoover", progress: 0, image: verity },
-        { id: 6, title: "Lessons in Chemistry", author: "Bonnie Garmus", progress: 0, image: lessonsInChemistry },
-        { id: 7, title: "Project Hail Mary", author: "Andy Weir", progress: 0, image: hailMary },
-    ];
-
-
-
-    
+  
     const styles = {
         pageContainer: {
             width: '100%',
@@ -313,47 +271,6 @@ const ProfilePage = () => {
     };
 
     
-    const newReadsContent = (
-        <div>
-            <h3 className="text-center mb-4 text-white">Currently Reading</h3>
-            <div id="booksCarousel" className="carousel slide" data-bs-ride="carousel">
-                <div className="carousel-inner" style={styles.carouselInner}>
-                    {Array.from({ length: Math.ceil(currentlyReadingBooks.length / 5) }, (_, i) => (
-                        <div key={i} className={`carousel-item ${i === 0 ? 'active' : ''}`} style={styles.carouselItem}>
-                            <div className="d-flex justify-content-center">
-                                {currentlyReadingBooks.slice(i * 5, (i + 1) * 5).map(book => (
-                                    <div key={book.id} style={styles.bookCard}>
-                                        <img
-                                            src={book.image}
-                                            alt={book.title}
-                                            style={styles.bookImage}
-                                        />
-                                        <div style={styles.bookCardContent}>
-                                            <h5 className="fs-6 text-center">{book.title}</h5>
-                                            <p className="text-center text-muted small">{book.author}</p>
-                                            <div style={styles.progressContainer}>
-                                                <div style={{ ...styles.progressBar, width: `${book.progress}%` }}></div>
-                                            </div>
-                                            <div style={styles.progressText}>{book.progress}% completed</div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-                <button className="carousel-control-prev" type="button" data-bs-target="#booksCarousel" data-bs-slide="prev" style={styles.carouselControl}>
-                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Previous</span>
-                </button>
-                <button className="carousel-control-next" type="button" data-bs-target="#booksCarousel" data-bs-slide="next" style={styles.carouselControl}>
-                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Next</span>
-                </button>
-            </div>
-          
-        </div>
-    );
     const wishListContent = wishlistBooks.length > 0 ? (
         <div>
             <h3 className="text-center mb-4 text-white">Your Wishlist</h3>
