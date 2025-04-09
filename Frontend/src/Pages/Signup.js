@@ -147,7 +147,7 @@ const Signup = () => {
       textDecoration: 'none',
     },
     signinButton: {
-      backgroundColor: '#8B1E3F', 
+      backgroundColor: '#57473a', 
       borderColor: '#8B1E3F',
       borderRadius: '8px',
       padding: '0.75rem',
@@ -241,12 +241,6 @@ const Signup = () => {
                   </InputGroup>
                 </Form.Group>
 
-
-                <div style={styles.forgotPassword}>
-                  <a href="#forgot" style={styles.forgotPasswordLink}>
-                    Forgot your password?
-                  </a>
-                </div>
 
                 <Button
                   type="submit"

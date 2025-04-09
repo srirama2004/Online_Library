@@ -11,7 +11,7 @@ const SignIn = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [message, setMessage] = useState(''); 
+    const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
     const togglePasswordVisibility = () => {
@@ -37,13 +37,13 @@ const SignIn = () => {
             const data = await response.json();
             setMessage(data.message);
             if (response.ok) {
-                
+
                 localStorage.setItem('userId', data.userId);
                 localStorage.setItem('userEmail', username);
 
-                
+
                 navigate('/');
-                
+
             }
         } catch (error) {
             console.error('Error during sign in:', error);
@@ -53,7 +53,7 @@ const SignIn = () => {
 
     const styles = {
         pageBackground: {
-            backgroundColor: '#A67B5B', 
+            backgroundColor: '#A67B5B',
             minHeight: '100vh',
             width: '100%',
             display: 'flex',
@@ -93,7 +93,7 @@ const SignIn = () => {
             left: '0',
             width: '100%',
             height: '100%',
-            background: 'rgba(0,0,0,0.3)', 
+            background: 'rgba(0,0,0,0.3)',
             zIndex: '1',
         },
         imageText: {
@@ -116,7 +116,7 @@ const SignIn = () => {
             fontWeight: '300',
         },
         formTitle: {
-            color: '#5D1E14', 
+            color: '#5D1E14',
             fontSize: '2rem',
             fontWeight: 'bold',
             marginBottom: '0.5rem',
@@ -143,11 +143,11 @@ const SignIn = () => {
             marginBottom: '2rem',
         },
         forgotPasswordLink: {
-            color: '#8B1E3F', 
+            color: '#8B1E3F',
             textDecoration: 'none',
         },
         signinButton: {
-            backgroundColor: '#57473a', 
+            backgroundColor: '#57473a',
             borderColor: '#8B1E3F',
             borderRadius: '8px',
             padding: '0.75rem',
@@ -229,7 +229,7 @@ const SignIn = () => {
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                             className="border-end-0"
-                                            style={{ height: "40px" }} 
+                                            style={{ height: "40px" }}
                                         />
                                         <InputGroup.Text
                                             className="bg-white border-start-0 d-flex align-items-center p-0"
@@ -241,12 +241,6 @@ const SignIn = () => {
                                     </InputGroup>
                                 </Form.Group>
 
-
-                                <div style={styles.forgotPassword}>
-                                    <a href="#forgot" style={styles.forgotPasswordLink}>
-                                        Forgot your password?
-                                    </a>
-                                </div>
 
                                 <Button
                                     type="submit"
