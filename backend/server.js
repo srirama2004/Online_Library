@@ -1,27 +1,27 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors"); // Import CORS
+const cors = require("cors"); 
 
 const passport = require('passport');
 const session = require('express-session');
 
-const bookRoutes = require("./routes/bookRoutes"); // Import routes
-const handlereviews = require("./routes/handlereviews"); // Import routes
-const handlePayement = require("./routes/handlerRzorpay"); // Import routes
+const bookRoutes = require("./routes/bookRoutes"); 
+const handlereviews = require("./routes/handlereviews"); 
+const handlePayement = require("./routes/handlerRzorpay"); 
 const wishlistRoutes = require("./routes/handleWIshlist");//C:\Users\user\Desktop\VI sem\FC\Prooject\Online_Library\backend\routes\handleWIshlist.js
-const currentReadRoutes = require("./routes/handleCurrentRead"); // Import routes
+const currentReadRoutes = require("./routes/handleCurrentRead"); 
 const authRoutes = require('./routes/auth');
 const CheckIn = require('./routes/checkins');
 const bookc = require('./routes/bookcroutes');
 
 require("dotenv").config();
- // Import Model
+ 
 require('./config/passport');
 
 
 const app = express();
 
-// Express session for passport
+
 app.use(session({
   secret: process.env.SESSION_SECRET || 'session_secret',
   resave: false,
@@ -34,13 +34,13 @@ app.use(cors());
 app.use(express.json()); 
 app.use("/books", bookRoutes); 
 app.use("/reviews", handlereviews);
-app.use("/rzpay", handlePayement);  // Use book routes
+app.use("/rzpay", handlePayement);  
 app.use("/wishlist", wishlistRoutes);
-app.use("/currentRead", currentReadRoutes); // Use book routes
+app.use("/currentRead", currentReadRoutes); 
 app.use('/api/auth', authRoutes);
 app.use('/checkins',CheckIn);
 app.use('/bookc',bookc);
-// ➤ MongoDB Connection
+
 mongoose.connect(process.env.MONGO_URI, { 
   useNewUrlParser: true, 
   useUnifiedTopology: true 

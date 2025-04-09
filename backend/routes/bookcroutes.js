@@ -1,8 +1,8 @@
-// backend/routes/bookContentRoute.js
+
 const express = require("express");
 const router = express.Router();
-const BookContent = require("../models/bookcontent"); // adjust path based on your structure
-// ➤ Add a new book content
+const BookContent = require("../models/bookcontent"); 
+
 router.post("/add", async (req, res) => {
   try {
     console.log("inside add cotnent ");
@@ -20,7 +20,7 @@ router.post("/add", async (req, res) => {
     res.status(500).json({ error: "Failed to add book", details: error.message });
   }
 });
-// GET book by bookId
+
 router.get("/:bookId", async (req, res) => {
   const { bookId } = req.params;
 

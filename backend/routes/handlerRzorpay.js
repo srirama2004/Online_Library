@@ -2,6 +2,7 @@ const express = require("express");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const Order = require("../models/orders");
+const Book = require("../models/bookdescription");
 require("dotenv").config();
 
 const router = express.Router();
@@ -11,13 +12,13 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-// 📌 CREATE ORDER API
+
 router.post("/create", async (req, res) => {
   try {
     const { userId, bookId, amount } = req.body;
 
     const options = {
-      amount: amount * 100, // amount in paise
+      amount: amount * 100, 
       currency: "INR",
       receipt: `receipt_order_${Math.random() * 1000}`,
     };
@@ -45,7 +46,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-// 📌 PAYMENT SUCCESS API
+
 router.post("/success", async (req, res) => {
   try {
     const {
@@ -87,13 +88,22 @@ router.get("/check/:userId/:bookId", async (req, res) => {
     console.log("Inside CHECK")
     const { userId, bookId } = req.params;
 
+    const book = await Book.findOne({ bookId: parseInt(bookId) });
+    if (!book) {
+      return res.status(404).json({ error: "Book not found" });
+    }
+
+    if (book.price === 0) {
+      return res.status(200).json({ owns: true }); 
+    }
+
     const order = await Order.findOne({
       userId,
       bookId,
       status: "paid",
     });
 
-    const owns = !!order; // true if order exists and is paid
+    const owns = !!order; 
     res.status(200).json({ owns });
   } catch (error) {
     console.error("Error in /check:", error);

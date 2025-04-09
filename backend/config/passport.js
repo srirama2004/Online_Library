@@ -12,18 +12,18 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        // Check if user already exists
+        
         let user = await User.findOne({ email: profile.emails[0].value });
         
         if (user) {
           return done(null, user);
         }
         
-        // If not, create a new user
+        
         const newUser = new User({
           email: profile.emails[0].value,
-          password: 'google-auth-' + Math.random().toString(36).slice(-8) // Generate random string
-          // You might want to add other fields like name, profile picture, etc.
+          password: 'google-auth-' + Math.random().toString(36).slice(-8) 
+          
         });
         
         await newUser.save();
@@ -35,7 +35,7 @@ passport.use(
   )
 );
 
-// Serialize and deserialize user
+
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });

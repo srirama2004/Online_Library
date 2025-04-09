@@ -1,8 +1,8 @@
-// models/Review.js
+
 const mongoose = require("mongoose");
 
 const reviewSchema = new mongoose.Schema({
-  bookId: { type: Number, required: true }, // Link to the book
+  bookId: { type: Number, required: true }, 
   username: { type: String, default: "Anonymous" },
   rating: { type: Number, required: true },
   text: { type: String, required: true }
