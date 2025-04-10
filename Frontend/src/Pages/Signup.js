@@ -154,7 +154,7 @@ const Signup = () => {
       borderRadius: '8px',
       padding: '0.75rem',
       fontWeight: '500',
-      marginBottom: '1rem',
+      margin: '1rem 0rem 1rem 0',
     },
     divider: {
       display: 'flex',
