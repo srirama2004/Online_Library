@@ -22,9 +22,6 @@ router.post('/signup', async (req, res) => {
     const newUser = new User({ email, password: hashedPassword });
     await newUser.save()
 
-    // const newUser = new User({ email, password });
-    // await newUser.save();
-
     res.status(201).json({ message: 'User created successfully', userId: newUser._id });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -41,13 +38,15 @@ router.post('/signin', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // if (user.password !== password) {
-    //   return res.status(401).json({ message: 'Invalid credentials' });
-    // }
+    if (user.authProvider === 'google') {
+      return res.status(403).json({ message: 'Please sign in using Google' });
+    }
+    
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
+    
 
     res.status(200).json({ message: 'User signed in successfully', userId: user._id });
   } catch (error) {

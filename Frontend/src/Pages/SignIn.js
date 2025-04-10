@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
+import { Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import pic from "../images/pic1.png";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router-dom";
-import { alignPropType } from 'react-bootstrap/esm/types';
+import { useNavigate } from "react-router-dom";
 
 
 const SignIn = () => {
