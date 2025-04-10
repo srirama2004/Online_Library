@@ -15,11 +15,72 @@ const ProfilePage = () => {
     const [purchasedBooks, setPurchasedBooks] = useState([]);
     const [wishlistBooks, setWishlistBooks] = useState([]);
     const [currentReads, setCurrentReads] = useState([]);
-
+    const [checkIns, setCheckIns] = useState({});
+      const [email, setEmail] = useState("");  
+      const currentYear = new Date().getFullYear();
     const navigate = useNavigate();
 
     const location = useLocation();
+//////////////////////////////////
+  useEffect(() => {
     
+    const loggedInEmail = localStorage.getItem('userEmail');
+    if (loggedInEmail) {
+    setEmail(loggedInEmail);
+    
+      fetchCheckIns(loggedInEmail);
+    }
+  }, []);
+  const fetchCheckIns = async (userEmail) => {
+    try {
+      
+      const res = await axios.get(`http://localhost:5000/checkins/${userEmail}`);
+      setCheckIns(res.data);
+    } catch (error) {
+      console.error("Error fetching check-ins:", error);
+    }
+  };
+  const calculateStreak = () => {
+    let streak = 0;
+    let date = new Date();
+    while (true) {
+      const dateKey = date.toISOString().split("T")[0];
+      if (checkIns[dateKey]) {
+        streak++;
+        date.setDate(date.getDate() - 1);
+      } else {
+        break;
+      }
+    }
+    return streak;
+  };
+  const months = Array.from({ length: 12 }, (_, monthIndex) => {
+    const monthStart = new Date(currentYear, monthIndex, 1);
+    const daysInMonth = new Date(currentYear, monthIndex + 1, 0).getDate();
+
+    const days = Array.from({ length: daysInMonth }, (_, dayIndex) => {
+      const day = dayIndex + 1;
+      const dateKey = `${currentYear}-${String(monthIndex + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      const checkedIn = checkIns[dateKey];
+
+      return (
+        <div key={day} className={`calendar-day ${checkedIn ? 'checked-in' : ''}`}>
+          {day}
+        </div>
+      );
+    });
+
+    return (
+      <div key={monthIndex} className="month-block">
+        <h3>{monthStart.toLocaleString('default', { month: 'long' })}</h3>
+        <div className="calendar-grid">
+          {days}
+        </div>
+      </div>
+    );
+  });
+
+    //////////////////////////////////////////////////////////////////////////
     useEffect(() => {
         const storedUserId = localStorage.getItem('userId');
         console.log("Retrieved userId from localStorage:", storedUserId);
@@ -449,39 +510,6 @@ const ProfilePage = () => {
     ) : (
         <div className="text-center p-5 text-white">No purchased books yet.</div>
     );
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     const tabContents = {
         reads: currentReadsContent, 
@@ -489,9 +517,6 @@ const ProfilePage = () => {
         completed: wishListContent, 
         notifications: purchasedContent, 
     };
-
-
-
     return (
         <Container fluid style={styles.pageContainer} className="p-0">
             {/* Header Section */}
@@ -554,18 +579,6 @@ const ProfilePage = () => {
                     <div
                         style={{
                             ...styles.navTab,
-                            ...(activeTab === 'completed' ? styles.activeTab : {}),
-                            ...(hoveredTab === 'completed' ? styles.navTabHover : {}),
-                        }}
-                        onClick={() => handleTabSelect('completed')}
-                        onMouseEnter={() => setHoveredTab('completed')}
-                        onMouseLeave={() => setHoveredTab(null)}
-                    >
-                        Completed
-                    </div>
-                    <div
-                        style={{
-                            ...styles.navTab,
                             ...(activeTab === 'notifications' ? styles.activeTab : {}),
                             ...(hoveredTab === 'notifications' ? styles.navTabHover : {}),
                         }}
@@ -584,6 +597,15 @@ const ProfilePage = () => {
                     {tabContents[activeTab]}
                 </div>
             </div>
+            <div className="calendar-container">
+      <h2>📅 Daily Check-In - {currentYear}</h2>
+      <div className="streak">
+        <span role="img" aria-label="fire">🔥</span> Current Streak: {calculateStreak()} days
+      </div>
+      <div className="year-calendar">
+        {months}
+      </div>
+    </div>
         </Container>
     );
 };

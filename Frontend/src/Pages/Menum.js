@@ -46,9 +46,11 @@ function Menum({ searchQuery, setSearchQuery }) {
               </span>
 
               {/* Logout Button */}
-              <Button variant="danger" size="sm" onClick={handleLogout}>
-                Logout
-              </Button>
+              <div onClick={handleLogout}>
+  <Button variant="danger" size="sm">
+    Logout
+  </Button>
+</div>
             </div>
           ) : (
             <Button href="/signin" className="auth-btn">Sign In</Button>

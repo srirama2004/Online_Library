@@ -5,12 +5,14 @@ const ReviewForm = ({ bookid }) => {
   const [text, setText] = useState("");
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
-  const name = localStorage.getItem('userEmail').split('@')[0];
-
+  const [message, setMessage] = useState("");
+  const name = localStorage.getItem('userEmail')?.split('@')[0];
+  const email=localStorage.getItem('userEmail');
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      // 1. Submit the review
       const response = await fetch("http://localhost:5000/reviews/add", {
         method: "POST",
         headers: {
@@ -18,20 +20,37 @@ const ReviewForm = ({ bookid }) => {
         },
         body: JSON.stringify({
           id: bookid,
-          username: name, 
+          username: name,
           rating: rating,
           text: text,
         }),
       });
 
+      if (!response.ok) {
+        throw new Error("Failed to submit review");
+      }
+
       const data = await response.json();
       console.log("Review submitted. All reviews:", data);
-      
-      
+
+      // 2. Delete only from currentRead
+      const deleteCurrentRead = await fetch(`http://localhost:5000/currentRead/delete/${email}/${bookid}`, {
+        method: "DELETE",
+      });
+
+      if (!deleteCurrentRead.ok) {
+        throw new Error("Failed to delete from currentRead");
+      }
+      console.log(`Book ID ${bookid} deleted from currentRead`);
+
+      // 3. Clear the form
       setText("");
       setRating(0);
+      setMessage("Review submitted and removed from Current Reads!");
+      
     } catch (error) {
-      console.error("Failed to submit review:", error);
+      console.error(error);
+      setMessage("Something went wrong. Please try again.");
     }
   };
 
@@ -67,6 +86,9 @@ const ReviewForm = ({ bookid }) => {
       <button type="submit" className="submit-button">
         Submit Review
       </button>
+
+      {/* Show success or error message */}
+      {message && <p className="form-message">{message}</p>}
     </form>
   );
 };

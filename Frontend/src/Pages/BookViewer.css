@@ -8,7 +8,7 @@
     background: #382e2500;
     position: fixed;
     width: 100%;
-    top: 0;
+    top: 10%;
     left: 0;
     z-index: 1000;
   }
@@ -100,3 +100,6 @@
   margin-left: 40px;
 }
 
+.overlay{
+  z-index: 1000;
+}

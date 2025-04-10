@@ -10,7 +10,10 @@
     justify-content: center;
     position: relative;
     text-align: center;
-    margin-top: -30px;
+    margin-top: -10px;
+  }
+  .overlay{
+    z-index: 1000;
   }
   .profile-menu {
     background-color: #4d4d4d;
@@ -28,7 +31,7 @@
   }
   
   .logout-btn {
-    color: #b41626;
+    color: #8B0000;
     font-weight: 500;
     padding: 10px 20px;
   }

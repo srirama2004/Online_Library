@@ -1,116 +1,55 @@
-/* CheckInPage.css */
+.calendar-container {
+  text-align: center;
+  padding: 20px;
+  color: white;
+}
 
-.check-in-page {
-    text-align: center;
-    padding: 2rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  .calendar-container {
-    display: grid;
-    grid-template-columns: repeat(7, 40px);
-    gap: 10px;
-    justify-content: center;
-    margin-top: 2rem;
-  }
-  
-  .calendar-day {
-    width: 40px;
-    height: 40px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    line-height: 40px;
-    font-weight: bold;
-    color: #555;
-    background-color: #f9f9f9;
-    transition: all 0.3s ease;
-  }
-  
-  .calendar-day:hover {
-    background-color: #eee;
-    cursor: pointer;
-  }
-  
-  .checked-in {
-    background-color: #800b0b; /* green */
-    color: white;
-    border: none;
-  }
-  
-  h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-  
-  button {
-    margin-top: 1rem;
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #4caf50;
-    border: none;
-    color: white;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
-  p {
-    margin-top: 1.5rem;
-    font-size: 1.2rem;
-    color: #ffffff;
-  }
-  body {
-    background-color: #121212; /* Very dark background */
-    color: #e0e0e0; /* Light text */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 20px;
-  }
-  
-  .calendar {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 300px;
-    margin: 0 auto;
-    gap: 10px;
-  }
-  
-  .day {
-    width: 40px;
-    height: 40px;
-    background-color: #1e1e1e; /* Darker boxes */
-    color: #bbbbbb; /* Light grey text */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #333;
-    border-radius: 8px;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .day.checked-in {
-    background-color: #800b0b; /* Bright green for checked-in days */
-    color: #ffffff;
-    border: 1px solid #800b0b;
-  }
-  
-  button {
-    background-color: #333333;
-    color: #ffffff;
-    padding: 10px 20px;
-    border: none;
-    margin: 20px auto;
-    display: block;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-  }
-  
-  button:hover {
-    background-color: #444444;
-  }
-  
+.streak {
+  margin: 10px 0;
+  font-size: 1.5rem;
+}
+
+.year-calendar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.month-block {
+  background: #3c3c3c;
+  padding: 10px;
+  border-radius: 10px;
+  width: 310px;
+  font-size: 5px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.calendar-day {
+  background: white;
+  color: black;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 12px; /* smaller font */
+  width: 30px;     /* adjust box size if needed */
+  height: 30px;    /* adjust box size if needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.calendar-day.checked-in {
+  background: darkred;
+  color: white;
+}

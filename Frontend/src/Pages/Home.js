@@ -25,9 +25,6 @@ function Home() {
 
       const data = await response.json();
       console.log('Check-in Response:', data);
-      if(data.message !=="Already checked in today"){
-        window.alert("🪙 +1 Coin Earned!");
-      }
     } catch (error) {
       console.error('Error during check-in:', error);
     }
