@@ -1,6 +1,7 @@
 const express = require("express");
 const currentRead = require("../models/currentRead"); 
 const Book = require("../models/bookdescription"); 
+const User = require('../models/User'); 
 const router = express.Router();
 
 
@@ -52,6 +53,33 @@ router.get("/all/:userId", async (req, res) => {
   } catch (err) {
     console.error("Error fetching current reads:", err);
     res.status(500).json({ error: "Failed to fetch current reads" });
+  }
+});
+router.delete("/delete/:email/:bookId", async (req, res) => {
+  const { email, bookId } = req.params;
+
+  try {
+    // 1. Find userId from Users table
+    const user = await User.findOne({ email }).select("_id");
+    console.log(user);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const userId = user._id.toString(); // or user.id if you use custom id
+
+    // 2. Delete from currentRead
+    const deleted = await currentRead.findOneAndDelete({ userId, bookId });
+
+    if (!deleted) {
+      return res.status(404).json({ error: "CurrentRead not found for this user and book" });
+    }
+
+    res.status(200).json({ message: "Deleted from currentRead successfully" });
+
+  } catch (error) {
+    console.error("Error deleting currentRead:", error);
+    res.status(500).json({ error: "Server error while deleting currentRead" });
   }
 });
 
