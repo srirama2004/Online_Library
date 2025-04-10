@@ -54,7 +54,7 @@ const ProfilePage = () => {
     }
     return streak;
   };
-  const months = Array.from({ length: 12 }, (_, monthIndex) => {
+  const months = Array.from({ length: 4 }, (_, monthIndex) => {
     const monthStart = new Date(currentYear, monthIndex, 1);
     const daysInMonth = new Date(currentYear, monthIndex + 1, 0).getDate();
 

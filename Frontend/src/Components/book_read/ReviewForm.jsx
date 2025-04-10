@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./styles.css";
 
 const ReviewForm = ({ bookid }) => {
@@ -8,6 +9,8 @@ const ReviewForm = ({ bookid }) => {
   const [message, setMessage] = useState("");
   const name = localStorage.getItem('userEmail')?.split('@')[0];
   const email=localStorage.getItem('userEmail');
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -47,7 +50,7 @@ const ReviewForm = ({ bookid }) => {
       setText("");
       setRating(0);
       setMessage("Review submitted and removed from Current Reads!");
-      
+      navigate('/');
     } catch (error) {
       console.error(error);
       setMessage("Something went wrong. Please try again.");
