@@ -86,7 +86,7 @@ function Home() {
     <>
       {showSplash ? (
         <div className="splash-screen">
-          <img src="https://i.ibb.co/W4sjYVt4/Readly.png" alt="Readly Logo" className="splash-logo" />
+          <img src="https://i.ibb.co/Nfvt492/Readly.png" alt="Readly Logo" className="splash-logo" />
         </div>
       ) : (
         <>
