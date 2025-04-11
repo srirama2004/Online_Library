@@ -29,13 +29,13 @@ git clone https://github.com/srirama2004/Online_Library
 cd Online_Library
 
 Setup Frontend:
-cd Frontend
-npm install
-npm start
+cd Frontend,
+npm install,
+npm start.
 Frontend will run at: http://localhost:3000
 
 Setup Backend:
-cd backend
-npm install
+cd backend,
+npm install,
 nodemon server.js
 Backend will run at: http://localhost:5000
