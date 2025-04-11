@@ -58,7 +58,8 @@ function Menu({ searchQuery, setSearchQuery }) {
 
       {/* Search Section */}
       <div className="search-container">
-        <h1 className="library-heading">ONLINE LIBRARY</h1>
+        <h1 className="library-heading">Readly</h1>
+        <h6>Reading Simplified</h6>
         <div className="search-bar">
           <input
             type="text"

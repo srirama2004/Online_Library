@@ -220,3 +220,37 @@
 .search-bar .btn:hover {
   background-color: #000000;
 }
+.splash-screen {
+  background-color: #000000;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeOut 1s ease-out forwards;
+}
+
+.splash-logo {
+  width: 1000px;
+  height: 1000px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.splash-slogan {
+  color: white;
+  margin-top: 20px;
+  font-size: 24px;
+  animation: fadeIn 2s ease-in-out;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 1; } /* stays visible until the component unmounts */
+}
