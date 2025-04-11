@@ -3,7 +3,7 @@ Welcome to Readly — your gateway to a world of books.
 Read easily. Read anywhere. ✨
 
 🚀 Features
-🔥 Splash screen (appears once per session)
+🔥 Splash Screen (appears once per session)
 
 📖 Browse popular and category-based books
 
@@ -13,29 +13,29 @@ Read easily. Read anywhere. ✨
 
 🎯 User authentication (sign in to access books)
 
-📚 Smooth carousel for top books
+📚 Smooth carousel showcasing top books
 
 🛡️ Clean UI with responsive design
 
 🛠️ Tech Stack
-Frontend- React.js,Bootstrap
-Backend-  Node.js + Express	
-Database- MongoDB
-Other Tools:
-ImgBB (for hosting book images)
+Frontend: React.js, Bootstrap
+Backend: Node.js, Express.js
+Database: MongoDB
+Other Tools: ImgBB (for hosting book images)
 
 ⚙️ Getting Started
-1. Clone the repository
+Clone the repository:
 git clone https://github.com/srirama2004/Online_Library
 cd Online_Library
-cd frontend
-3. Install frontend dependencies
+
+Setup Frontend:
+cd Frontend
 npm install
-4. Start the React app
 npm start
-Frontend will be live at http://localhost:3000
-To start the Backend
+Frontend will run at: http://localhost:3000
+
+Setup Backend:
 cd backend
 npm install
 nodemon server.js
-Backend will run at http://localhost:5000
+Backend will run at: http://localhost:5000
