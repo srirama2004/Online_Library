@@ -19,6 +19,7 @@ require('./config/passport');
 
 
 const app = express();
+app.use(express.json()); 
 app.use(cors({
   origin: "https://online-library-l4oi.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE"],
@@ -32,7 +33,6 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.json()); 
 app.use("/books", bookRoutes); 
 app.use("/reviews", handlereviews);
 app.use("/rzpay", handlePayement);  
