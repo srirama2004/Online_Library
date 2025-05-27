@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const CheckIn = require("../models/Checkin.js");
+const CheckIn = require("../models/CheckIn.js");
 
 
 router.post('/', async (req, res) => {
