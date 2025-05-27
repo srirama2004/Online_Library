@@ -4,7 +4,6 @@ const cors = require("cors");
 
 const passport = require('passport');
 const session = require('express-session');
-
 const bookRoutes = require("./routes/bookRoutes"); 
 const handlereviews = require("./routes/handlereviews"); 
 const handlePayement = require("./routes/handlerRzorpay"); 
@@ -20,7 +19,11 @@ require('./config/passport');
 
 
 const app = express();
-
+app.use(cors({
+  origin: "https://online-library-l4oi.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 
 app.use(session({
   secret: process.env.SESSION_SECRET || 'session_secret',
@@ -29,8 +32,6 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(cors());
 app.use(express.json()); 
 app.use("/books", bookRoutes); 
 app.use("/reviews", handlereviews);
