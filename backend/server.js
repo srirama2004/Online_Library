@@ -26,14 +26,7 @@ app.use((req, res, next) => {
 
 // ✅ Parse JSON before cors
 app.use(express.json());
-
-// ✅ CORS setup
-const corsOptions = {
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-};
-app.use(cors(corsOptions));
+app.use(cors());
 
 // ✅ Handle preflight requests
 app.options("*", cors(corsOptions));
