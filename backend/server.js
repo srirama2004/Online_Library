@@ -28,9 +28,6 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(cors());
 
-// ✅ Handle preflight requests
-app.options("*", cors(corsOptions));
-
 // ✅ Session & Passport setup
 app.use(session({
   secret: process.env.SESSION_SECRET || "session_secret",
