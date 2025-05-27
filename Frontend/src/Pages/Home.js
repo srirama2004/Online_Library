@@ -19,7 +19,7 @@ function Home() {
   const checkInAndUpdateStreak = useCallback(async (email) => {
     try {
       const today = new Date().toISOString().split('T')[0];
-      const response = await fetch(`http://localhost:5000/checkins`, {
+      const response = await fetch(`https://readlybackend.vercel.app/checkins`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, date: today })
@@ -40,14 +40,14 @@ function Home() {
   }, [checkInAndUpdateStreak]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/books/all")
+    fetch("https://readlybackend.vercel.app/books/all")
       .then((res) => res.json())
       .then((data) => setBooks(data))
       .catch((err) => console.error("Error fetching top books:", err));
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/books/${selectedCategory}`)
+    fetch(`https://readlybackend.vercel.app/books/${selectedCategory}`)
       .then((res) => res.json())
       .then((data) => setBooksByCategory(data))
       .catch((err) => console.error(`Error fetching books for ${selectedCategory}:`, err));

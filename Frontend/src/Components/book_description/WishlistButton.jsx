@@ -5,7 +5,7 @@ const WishlistButton = ({ userId, bookId }) => {
 
   const checkWishlist = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/wishlist/check/${userId}/${bookId}`);
+      const res = await fetch(`https://readlybackend.vercel.app/wishlist/check/${userId}/${bookId}`);
       const data = await res.json();
       setWished(data.wished);
     } catch (err) {
@@ -15,7 +15,7 @@ const WishlistButton = ({ userId, bookId }) => {
 
   const toggleWishlist = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/wishlist/toggle`, {
+      const res = await fetch(`https://readlybackend.vercel.app/wishlist/toggle`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, bookId }),

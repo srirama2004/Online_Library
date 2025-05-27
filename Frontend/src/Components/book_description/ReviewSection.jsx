@@ -17,7 +17,7 @@ const ReviewSection = ({ bookId, reviews, setReviews }) => {
     };
 
     try {
-      const response = await fetch('http://localhost:5000/reviews/add', {
+      const response = await fetch('https://readlybackend.vercel.app/reviews/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

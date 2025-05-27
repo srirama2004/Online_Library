@@ -20,7 +20,7 @@ const CheckInPage = () => {
   const fetchCheckIns = async (userEmail) => {
     try {
       
-      const res = await axios.get(`http://localhost:5000/checkins/${userEmail}`);
+      const res = await axios.get(`https://readlybackend.vercel.app/checkins/${userEmail}`);
       setCheckIns(res.data);
     } catch (error) {
       console.error("Error fetching check-ins:", error);

@@ -24,7 +24,7 @@ const RazorpayButton = ({ amount, user, bookId }) => {
     }
 
     
-    const result = await fetch("http://localhost:5000/rzpay/create", {
+    const result = await fetch("https://readlybackend.vercel.app/rzpay/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -50,7 +50,7 @@ const RazorpayButton = ({ amount, user, bookId }) => {
       
       order_id: data.orderId,
       handler: async function (response) {
-        const verifyRes = await fetch("http://localhost:5000/rzpay/success", {
+        const verifyRes = await fetch("https://readlybackend.vercel.app/rzpay/success", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

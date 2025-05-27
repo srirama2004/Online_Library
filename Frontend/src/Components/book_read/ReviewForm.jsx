@@ -16,7 +16,7 @@ const ReviewForm = ({ bookid }) => {
 
     try {
       // 1. Submit the review
-      const response = await fetch("http://localhost:5000/reviews/add", {
+      const response = await fetch("https://readlybackend.vercel.app/reviews/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +37,7 @@ const ReviewForm = ({ bookid }) => {
       console.log("Review submitted. All reviews:", data);
 
       // 2. Delete only from currentRead
-      const deleteCurrentRead = await fetch(`http://localhost:5000/currentRead/delete/${email}/${bookid}`, {
+      const deleteCurrentRead = await fetch(`https://readlybackend.vercel.app/currentRead/delete/${email}/${bookid}`, {
         method: "DELETE",
       });
 

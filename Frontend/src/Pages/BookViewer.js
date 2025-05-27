@@ -26,7 +26,7 @@ const BookViewer = () => {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/bookc/${bookId}`);
+        const response = await axios.get(`https://readlybackend.vercel.app/bookc/${bookId}`);
         setBook(response.data);
       } catch (error) {
         console.error("Error fetching book content:", error);
@@ -35,7 +35,7 @@ const BookViewer = () => {
   
     const checkOwnership = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/rzpay/check/${userId}/${bookId}`);
+        const res = await fetch(`https://readlybackend.vercel.app/rzpay/check/${userId}/${bookId}`);
         const data = await res.json();
   
         if (!data.owns) {
